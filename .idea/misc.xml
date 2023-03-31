@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Weather-App/app/src/main/res/drawable/ic_search.xml" value="0.2025" />
+        <entry key="..\:/Weather-App/app/src/main/res/drawable/ic_settings.xml" value="0.2025" />
+        <entry key="..\:/Weather-App/app/src/main/res/drawable/shape.xml" value="0.2025" />
         <entry key="..\:/Weather-App/app/src/main/res/layout/activity_main.xml" value="0.23854166666666668" />
         <entry key="..\:/Weather-App/app/src/main/res/menu/bottom_nav.xml" value="0.253125" />
       </map>
