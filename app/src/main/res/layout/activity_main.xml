@@ -38,13 +38,5 @@
         android:background="@color/color_surface_1"
         app:menu="@menu/bottom_nav" />
 
-    <TextView
-        android:layout_below="@+id/toolbar"
-        android:gravity="center"
-        android:id="@+id/test_view"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:hint="test" />
-
 
 </RelativeLayout>

@@ -1,6 +1,6 @@
 package com.example.weatherapp.viewmodel
 
-import android.util.Log
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,13 +20,13 @@ class MainActivityViewModel : ViewModel() {
     }
 
 
-    fun makeApiCall() {
+    fun makeApiCall(q : String) {
         viewModelScope.launch(Dispatchers.IO) {
 
             val retroInstance = RetrofitHelper.getRetroInstance().create(WeatherService::class.java)
 
             val listOfCitiesResponse =
-                retroInstance.getCitiesByName("e944a0862777428a870190820233103", "London").body()
+                retroInstance.getCitiesByName("e944a0862777428a870190820233103", q).body()
             listOfCities.postValue(listOfCitiesResponse)
         }
 
