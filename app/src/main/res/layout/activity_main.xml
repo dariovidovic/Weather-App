@@ -6,24 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_surface_0"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        app:contentInsetStart="0dp"
-        android:background="@color/color_primary">
+        android:background="@color/color_primary"
+        app:contentInsetStart="0dp">
 
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+        <AutoCompleteTextView
+            android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="8dp"
-            android:id="@+id/search_bar"
             android:background="@drawable/shape"
-            tools:ignore="SpeakableTextPresentCheck"
             android:drawableStart="@drawable/ic_search"
+            android:hint="    Search Cities"
             android:paddingStart="16dp"
-            android:hint="    Search Cities"/>
+            tools:ignore="SpeakableTextPresentCheck" />
 
 
     </androidx.appcompat.widget.Toolbar>
@@ -36,6 +37,14 @@
         android:layout_alignParentBottom="true"
         android:background="@color/color_surface_1"
         app:menu="@menu/bottom_nav" />
+
+    <TextView
+        android:layout_below="@+id/toolbar"
+        android:gravity="center"
+        android:id="@+id/test_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:hint="test" />
 
 
 </RelativeLayout>
