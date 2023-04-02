@@ -2,18 +2,10 @@ package com.example.weatherapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.ArrayAdapter
-import android.widget.ListAdapter
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.ActivityMainBinding
-import androidx.activity.viewModels
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
-import com.example.weatherapp.data.SearchResponse
-import com.example.weatherapp.viewmodel.MainActivityViewModel
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,36 +15,42 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val viewModel: MainActivityViewModel by viewModels()
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.searchBar.threshold = 3
-        viewModel.getCities().observe(this, Observer<List<SearchResponse>>{
-            val adapter = ArrayAdapter<SearchResponse>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, it as MutableList<SearchResponse>)
-            binding.searchBar.setAdapter(adapter)
-        })
 
-        val textWatcher : TextWatcher = object : TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        loadFragment(SearchFragment())
+        val navView: BottomNavigationView = binding.bottomNav
+        navView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.search -> {
+                    loadFragment(SearchFragment())
+                    true
 
+                }
+                R.id.favourite -> {
+                    loadFragment(MyCitiesFragment())
+                    true
+                }
+                R.id.settings -> {
+                    loadFragment(SettingsFragment())
+                    true
+                }
+                else ->{
+
+                }
             }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if(binding.searchBar.text.count()>2)
-                    viewModel.makeApiCall(binding.searchBar.text.toString())
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
+            true
 
         }
-        binding.searchBar.addTextChangedListener(textWatcher)
 
 
     }
 
+    private fun loadFragment(fragment: Fragment) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.container, fragment)
+        fragmentTransaction.commit()
+    }
 
 
 }

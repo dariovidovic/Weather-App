@@ -12,10 +12,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class MainActivityViewModel : ViewModel() {
+class CitiesViewModel : ViewModel() {
 
-    var listOfCities = MutableLiveData<List<SearchResponse>>()
-    fun getCities() : LiveData<List<SearchResponse>> {
+    var listOfCities = MutableLiveData<List<SearchResponse>?>()
+    fun getCities() : MutableLiveData<List<SearchResponse>?> {
         return listOfCities
     }
 

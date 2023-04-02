@@ -7,6 +7,6 @@ data class SearchResponse(
 
 ) {
     override fun toString(): String {
-        return "Name: " + this.name + " (Region: " + this.region + ")"
+        return this.name + " (Region: " + this.region + ")"
     }
 }
