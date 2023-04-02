@@ -1,6 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/shape"
+    android:foreground="?attr/selectableItemBackground">
+    
+    <TextView
+        android:id="@+id/city_name"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:hint="City Name"
+        android:textColorHint="@color/black"/>
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/star_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/city_name"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/api_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/city_name"
+        app:layout_constraintTop_toTopOf="parent" />
+    
+    <TextView
+        android:id="@+id/api_temperature"
+        android:layout_width="72dp"
+        android:layout_height="32dp"
+        app:layout_constraintEnd_toStartOf="@id/api_icon"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/city_coordinates"
+        app:layout_constraintTop_toBottomOf="@id/city_name"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginEnd="168dp"
+        android:layout_marginStart="16dp"
+        android:hint="Coordinates"
+        android:textColorHint="@color/black"/>
+    <TextView
+        android:id="@+id/city_distance"
+        app:layout_constraintTop_toBottomOf="@id/city_coordinates"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="168dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:hint="Distance"
+        android:textColorHint="@color/black"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
