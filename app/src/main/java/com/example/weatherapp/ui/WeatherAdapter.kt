@@ -25,10 +25,13 @@ class WeatherAdapter(private val citiesList : MutableList<ForecastResponse?>) : 
     }
 
     override fun onBindViewHolder(holder: CitiesViewHolder, position: Int) {
-        /*holder.itemView.setOnClickListener {
-
-        }*/
         val currentCity = citiesList[position]
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, CityItemActivity::class.java)
+            intent.putExtra("city", currentCity)
+            holder.itemView.context.startActivity(intent)
+        }
         holder.cityCoordinates.text = "37°C47'N, 122°25'W"
         holder.cityDistance.text = "Distance: 8542km"
         holder.cityName.text = currentCity?.location?.name

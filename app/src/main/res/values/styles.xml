@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DisplayExtraLargeNLv1Right">
+        <item name="android:textColor">#1c1f22</item>
+        <item name="android:textSize">60sp</item>
+        <item name="android:gravity">right</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
+    </style>
+
+    <style name="HeadlineSmallNLv1Left">
+        <item name="android:textColor">#1c1f22</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+    </style>
+
+    <style name="DescriptionNLv2Center">
+        <item name="android:textColor">#801c1f22</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="BodyMediumNLv2Left">
+        <item name="android:textColor">#801c1f22</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="HeadlineLargeNLv1Left">
+        <item name="android:textColor">#1c1f22</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+    </style>
+
+</resources>

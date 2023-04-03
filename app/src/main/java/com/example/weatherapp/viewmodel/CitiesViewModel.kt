@@ -1,6 +1,7 @@
 package com.example.weatherapp.viewmodel
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -45,7 +46,7 @@ class CitiesViewModel : ViewModel() {
             val retroInstance = RetrofitHelper.getRetroInstance().create(WeatherService::class.java)
 
             val forecastResponse =
-                retroInstance.getForecastByCity("e944a0862777428a870190820233103", q, "5").body()
+                retroInstance.getForecastByCity("e944a0862777428a870190820233103", q, "7").body()
             forecastData.postValue(forecastResponse)
         }
     }
