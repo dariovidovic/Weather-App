@@ -91,7 +91,8 @@
                     android:src="@drawable/icons_android_ic_thermostat"
                     app:layout_constraintEnd_toStartOf="@+id/wind_icon"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/current_weather" />
+                    app:layout_constraintTop_toBottomOf="@id/current_weather"
+                    tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/wind_icon"
@@ -103,7 +104,8 @@
                     android:src="@drawable/icons_android_ic_wind"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/current_weather" />
+                    app:layout_constraintTop_toBottomOf="@id/current_weather"
+                    tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/humidity_icon"
@@ -115,7 +117,8 @@
                     android:src="@drawable/icons_android_ic_humidity"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/wind_icon"
-                    app:layout_constraintTop_toBottomOf="@id/current_weather" />
+                    app:layout_constraintTop_toBottomOf="@id/current_weather"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/minMaxTextView"
@@ -125,7 +128,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="MIN / MAX"
+                    android:text="@string/min_max"
                     app:fontFamily="@font/roboto_medium"
                     app:layout_constraintEnd_toStartOf="@+id/windTextView"
                     app:layout_constraintStart_toStartOf="parent"
@@ -140,7 +143,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="WIND"
+                    android:text="@string/wind"
                     app:layout_constraintEnd_toStartOf="@+id/humidityTextView"
                     app:layout_constraintStart_toEndOf="@+id/minMaxTextView"
                     app:layout_constraintTop_toBottomOf="@id/thermostat_icon" />
@@ -153,7 +156,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="HUMIDITY"
+                    android:text="@string/humidity"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/windTextView"
                     app:layout_constraintTop_toBottomOf="@id/thermostat_icon" />
@@ -249,7 +252,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="VISIBILITY"
+                    android:text="@string/visibility"
                     app:fontFamily="@font/roboto_medium"
                     app:layout_constraintEnd_toStartOf="@id/accuracyTextView"
                     app:layout_constraintStart_toEndOf="@id/pressureTextView"
@@ -287,7 +290,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="ACCURACY"
+                    android:text="@string/accuracy"
                     app:fontFamily="@font/roboto_medium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/visibilityTextView"
@@ -312,7 +315,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:menu="@menu/app_bar"></androidx.appcompat.widget.Toolbar>
+                app:menu="@menu/app_bar" />
 
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -336,7 +339,7 @@
 
             <TextView
                 android:id="@+id/today_headline"
-                android:text="Today"
+                android:text="@string/today"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
@@ -359,7 +362,7 @@
 
             <TextView
                 android:id="@+id/forecast_headline"
-                android:text="Next 7 days"
+                android:text="@string/next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
