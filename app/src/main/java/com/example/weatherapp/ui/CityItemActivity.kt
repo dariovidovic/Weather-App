@@ -1,7 +1,9 @@
 package com.example.weatherapp.ui
 
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.weatherapp.R
@@ -20,8 +22,10 @@ class CityItemActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val currentCity = intent.extras?.getSerializable("city") as ForecastResponse
+        binding.collapsingToolbarLayout.title = currentCity.location.name
+        binding.collapsingToolbarLayout.expandedTitleMarginStart = 40
+        binding.collapsingToolbarLayout.expandedTitleMarginTop = 180
         binding.run {
-            cityName.text = currentCity.location.name
             currentTemperature.text = currentCity.current.temp_c.toString() + "°"
             currentTemperatureApiIcon.load("https:"+ currentCity.current.condition.icon){
                 error(R.drawable.ic_launcher_background)
