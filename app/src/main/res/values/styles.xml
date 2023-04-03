@@ -3,7 +3,7 @@
 
     <style name="DisplayExtraLargeNLv1Right">
         <item name="android:textColor">#1c1f22</item>
-        <item name="android:textSize">60sp</item>
+        <item name="android:textSize">64sp</item>
         <item name="android:gravity">right</item>
         <item name="android:fontFamily">@font/roboto_light</item>
     </style>

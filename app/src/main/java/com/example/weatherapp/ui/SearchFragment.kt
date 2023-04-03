@@ -79,11 +79,10 @@ class SearchFragment : Fragment() {
 
 
         val linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        val citiesList = binding.recyclerView
         val adapter = WeatherAdapter(forecastReponse)
 
         binding.recyclerView.layoutManager = linearLayoutManager
-        citiesList.adapter = adapter
+        binding.recyclerView.adapter = adapter
 
 
         return root

@@ -7,12 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import coil.load
-import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
 import com.example.weatherapp.data.ForecastResponse
-import com.example.weatherapp.databinding.ListItemBinding
+
 
 class WeatherAdapter(private val citiesList : MutableList<ForecastResponse?>) : RecyclerView.Adapter<WeatherAdapter.CitiesViewHolder>() {
 

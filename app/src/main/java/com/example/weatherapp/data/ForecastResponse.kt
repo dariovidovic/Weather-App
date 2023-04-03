@@ -7,7 +7,8 @@ data class ForecastResponse(
     val current: Current,
     val forecast: Forecast,
     val forecastday: ForecastDay,
-    val day: Day
+    val day: Day,
+    val hour: Hour
 ) : Serializable
 
 data class Location(
@@ -30,8 +31,10 @@ data class Condition(
     val icon: String
 ) : Serializable
 
-data class Forecast(var forecastday: ArrayList<ForecastDay> = arrayListOf()) : Serializable
+data class Forecast(var forecastday: ArrayList<ForecastDay>  = arrayListOf()) : Serializable
 
-data class ForecastDay(val day: Day) : Serializable
+data class ForecastDay(val day: Day, var hour: ArrayList<Hour>) : Serializable
 
 data class Day(val maxtemp_c: Double, val mintemp_c: Double) : Serializable
+
+data class Hour(val time: String, val temp_c: Double, val condition: Condition) : Serializable

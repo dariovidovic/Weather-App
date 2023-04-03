@@ -2,6 +2,7 @@ package com.example.weatherapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.weatherapp.R
 import com.example.weatherapp.data.ForecastResponse
@@ -27,7 +28,7 @@ class CityItemActivity : AppCompatActivity() {
             }
             currentWeather.text = currentCity.current.condition.text
             currentDate.text = currentCity.location.localtime.subSequence(0,10)
-            currentTime.text = currentCity.location.localtime.subSequence(11,15)
+            currentTime.text = currentCity.location.localtime.subSequence(11,16)
             minMaxValue.text = currentCity.forecast.forecastday[0].day.mintemp_c.toString()+"°"+" / "+currentCity.forecast.forecastday[0].day.maxtemp_c.toString()+"°"
             windValue.text = currentCity.current.wind_kph.toString() + " km/h" + "( ${currentCity.current.wind_dir})"
             humidityValue.text = currentCity.current.humidity.toString() + "%"
@@ -35,9 +36,12 @@ class CityItemActivity : AppCompatActivity() {
             visibilityValue.text = currentCity.current.vis_km.toString() + " km"
             accuracyValue.text = "93%"
 
-
-
         }
+        val adapter = ForecastAdapter(currentCity)
+        val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.currentRecyclerView.layoutManager = linearLayoutManager
+        binding.currentRecyclerView.adapter = adapter
+
 
 
 
