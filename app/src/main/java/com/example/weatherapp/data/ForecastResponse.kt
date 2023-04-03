@@ -33,8 +33,8 @@ data class Condition(
 
 data class Forecast(var forecastday: ArrayList<ForecastDay>  = arrayListOf()) : Serializable
 
-data class ForecastDay(val day: Day, var hour: ArrayList<Hour>) : Serializable
+data class ForecastDay(val date: String,val day: Day, var hour: ArrayList<Hour>) : Serializable
 
-data class Day(val maxtemp_c: Double, val mintemp_c: Double) : Serializable
+data class Day(val maxtemp_c: Double, val mintemp_c: Double, val avgtemp_c : Float, val condition: Condition) : Serializable
 
 data class Hour(val time: String, val temp_c: Double, val condition: Condition) : Serializable

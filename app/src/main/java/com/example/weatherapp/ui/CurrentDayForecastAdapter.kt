@@ -10,16 +10,16 @@ import coil.load
 import com.example.weatherapp.R
 import com.example.weatherapp.data.ForecastResponse
 
-class ForecastAdapter(private val forecastInfo: ForecastResponse?): RecyclerView.Adapter<ForecastAdapter.ForecastViewHolder>() {
+class CurrentDayForecastAdapter(private val forecastInfo: ForecastResponse?): RecyclerView.Adapter<CurrentDayForecastAdapter.CurrentDayForecastViewHolder>() {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForecastViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrentDayForecastViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.weather_item, parent, false)
-        return ForecastAdapter.ForecastViewHolder(itemView)
+        return CurrentDayForecastAdapter.CurrentDayForecastViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: ForecastViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CurrentDayForecastViewHolder, position: Int) {
                 holder.bindCurrHour(forecastInfo?.forecast?.forecastday?.get(0)?.hour?.get(position)?.time?.subSequence(11,16).toString())
                 holder bindCurrIcon("https:"+forecastInfo?.forecast?.forecastday?.get(0)?.hour?.get(position)?.condition?.icon)
                 holder.bindCurrTemp(forecastInfo?.forecast?.forecastday?.get(0)?.hour?.get(position)?.temp_c.toString()+"°C")
@@ -29,7 +29,7 @@ class ForecastAdapter(private val forecastInfo: ForecastResponse?): RecyclerView
         return 7
     }
 
-    class ForecastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class CurrentDayForecastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindCurrHour(info: String) {
             val currentHour : TextView = itemView.findViewById(R.id.current_hour)

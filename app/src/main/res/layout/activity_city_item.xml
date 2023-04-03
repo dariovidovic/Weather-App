@@ -344,7 +344,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/shape"
+            android:background="@color/color_surface_0"
             tools:context=".ui.SearchFragment"
             android:layout_margin="8dp"
             android:orientation="horizontal">
@@ -363,8 +363,33 @@
                />
 
             <androidx.recyclerview.widget.RecyclerView
-                app:layout_constraintTop_toBottomOf="@id/today_headline"
                 android:id="@+id/current_recycler_view"
+                android:layout_marginTop="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape"
+                app:layout_constraintTop_toBottomOf="@id/today_headline"
+                tools:layout_editor_absoluteX="0dp"
+                tools:listitem="@layout/weather_item" />
+
+            <TextView
+                android:id="@+id/forecast_headline"
+                android:text="Next 7 days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="16dp"
+                style="@style/HeadlineSmallNLv1Left"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/current_recycler_view"
+
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:background="@drawable/shape"
+                app:layout_constraintTop_toBottomOf="@id/forecast_headline"
+                android:layout_marginTop="14dp"
+                android:id="@+id/week_recycler_view"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

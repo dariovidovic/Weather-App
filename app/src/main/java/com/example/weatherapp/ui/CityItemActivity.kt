@@ -37,10 +37,15 @@ class CityItemActivity : AppCompatActivity() {
             accuracyValue.text = "93%"
 
         }
-        val adapter = ForecastAdapter(currentCity)
+        val currentDayAdapter = CurrentDayForecastAdapter(currentCity)
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.currentRecyclerView.layoutManager = linearLayoutManager
-        binding.currentRecyclerView.adapter = adapter
+        binding.currentRecyclerView.adapter = currentDayAdapter
+
+        val forecastAdapter = WeekForecastAdapter(currentCity)
+        val linearLayoutManagerr = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.weekRecyclerView.layoutManager = linearLayoutManagerr
+        binding.weekRecyclerView.adapter = forecastAdapter
 
 
 
