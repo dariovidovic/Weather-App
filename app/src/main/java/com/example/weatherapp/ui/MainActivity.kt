@@ -24,18 +24,15 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.search -> {
                     loadFragment(SearchFragment())
-                    true
 
                 }
                 R.id.favourite -> {
                     loadFragment(MyCitiesFragment())
-                    true
                 }
                 R.id.settings -> {
                     loadFragment(SettingsFragment())
-                    true
                 }
-                else ->{
+                else -> {
 
                 }
             }

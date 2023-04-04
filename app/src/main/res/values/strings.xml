@@ -15,5 +15,7 @@
     <string name="city_name">City Name</string>
     <string name="distance">Distance</string>
     <string name="coordinates">Coordinates</string>
+    <string name="distanceMock">Distance: 8542km</string>
+    <string name="coordinatesMock">37°C47N, 122°25W</string>
 
 </resources>

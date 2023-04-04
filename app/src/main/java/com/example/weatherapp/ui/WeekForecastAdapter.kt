@@ -16,10 +16,10 @@ class WeekForecastAdapter(private val forecastInfo: ForecastResponse?) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForecastViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.weather_item, parent, false)
-        return WeekForecastAdapter.ForecastViewHolder(itemView)
+        return ForecastViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: WeekForecastAdapter.ForecastViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ForecastViewHolder, position: Int) {
         holder.bindCurrHour(forecastInfo?.forecast?.forecastday?.get(position)?.date?.subSequence(5,10).toString())
         holder bindCurrIcon("https:"+forecastInfo?.forecast?.forecastday?.get(position)?.day?.condition?.icon)
         holder.bindCurrTemp(forecastInfo?.forecast?.forecastday?.get(position)?.day?.avgtemp_c.toString() +"°C")

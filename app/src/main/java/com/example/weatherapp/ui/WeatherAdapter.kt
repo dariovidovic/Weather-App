@@ -12,11 +12,11 @@ import com.example.weatherapp.R
 import com.example.weatherapp.data.ForecastResponse
 
 
+
 class WeatherAdapter(private val citiesList : MutableList<ForecastResponse?>) : RecyclerView.Adapter<WeatherAdapter.CitiesViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CitiesViewHolder {
-
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_item, parent, false)
         return CitiesViewHolder(itemView)
@@ -24,14 +24,14 @@ class WeatherAdapter(private val citiesList : MutableList<ForecastResponse?>) : 
 
     override fun onBindViewHolder(holder: CitiesViewHolder, position: Int) {
         val currentCity = citiesList[position]
-
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, CityItemActivity::class.java)
             intent.putExtra("city", currentCity)
             holder.itemView.context.startActivity(intent)
         }
-        holder.cityCoordinates.text = "37°C47'N, 122°25'W"
-        holder.cityDistance.text = "Distance: 8542km"
+        val context = holder.itemView.context
+        holder.cityCoordinates.text = context.getString(R.string.coordinatesMock)
+        holder.cityDistance.text = context.getString(R.string.distanceMock)
         holder.cityName.text = currentCity?.location?.name
         holder.apiTemperature.text = currentCity?.current?.temp_c.toString()+"°C"
         holder.starIcon.load(R.drawable.icons_android_ic_star_0)
