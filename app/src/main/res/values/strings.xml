@@ -17,5 +17,13 @@
     <string name="coordinates">Coordinates</string>
     <string name="distanceMock">Distance: 8542km</string>
     <string name="coordinatesMock">37°C47N, 122°25W</string>
+    <string name="currentTemperature">%s°</string>
+    <string name="api_icon_url">https:%s</string>
+    <string name="min_max_temp">%s° / %s°</string>
+    <string name="accuracyMock">93%</string>
+    <string name="wind_value">%s km/h (%s)</string>
+    <string name="visibility_value">%s km</string>
+    <string name="pressure_value">%s hPa</string>
+    <string name="percentage">%s\%%</string>
 
 </resources>

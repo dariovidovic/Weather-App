@@ -24,16 +24,24 @@ class CurrentDayForecastAdapter(private val forecastInfo: ForecastResponse?) :
     }
 
     override fun onBindViewHolder(holder: CurrentDayForecastViewHolder, position: Int) {
+        val context = holder.itemView.context
         holder.bindCurrHour(
             forecastInfo?.forecast?.forecastday?.get(0)?.hour?.get(position)?.time?.subSequence(
                 11,
                 16
             ).toString()
         )
-        holder bindCurrIcon ("https:" + forecastInfo?.forecast?.forecastday?.get(0)?.hour?.get(
-            position
-        )?.condition?.icon)
-        holder.bindCurrTemp(forecastInfo?.forecast?.forecastday?.get(0)?.hour?.get(position)?.temp_c.toString() + "°C")
+        holder bindCurrIcon (context.getString(
+            R.string.api_icon_url, forecastInfo?.forecast?.forecastday?.get(0)?.hour?.get(
+                position
+            )?.condition?.icon
+        ))
+        holder.bindCurrTemp(
+            context.getString(
+                R.string.currentTemperature,
+                forecastInfo?.forecast?.forecastday?.get(0)?.hour?.get(position)?.temp_c.toString()
+            )
+        )
     }
 
     override fun getItemCount(): Int {

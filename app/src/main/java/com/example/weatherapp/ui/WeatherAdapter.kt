@@ -12,8 +12,8 @@ import com.example.weatherapp.R
 import com.example.weatherapp.data.ForecastResponse
 
 
-
-class WeatherAdapter(private val citiesList : MutableList<ForecastResponse?>) : RecyclerView.Adapter<WeatherAdapter.CitiesViewHolder>() {
+class WeatherAdapter(private val citiesList: MutableList<ForecastResponse?>) :
+    RecyclerView.Adapter<WeatherAdapter.CitiesViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CitiesViewHolder {
@@ -33,9 +33,15 @@ class WeatherAdapter(private val citiesList : MutableList<ForecastResponse?>) : 
         holder.cityCoordinates.text = context.getString(R.string.coordinatesMock)
         holder.cityDistance.text = context.getString(R.string.distanceMock)
         holder.cityName.text = currentCity?.location?.name
-        holder.apiTemperature.text = currentCity?.current?.temp_c.toString()+"°C"
+        holder.apiTemperature.text =
+            context.getString(R.string.currentTemperature, currentCity?.current?.temp_c.toString())
         holder.starIcon.load(R.drawable.icons_android_ic_star_0)
-        holder.apiIcon.load("https:"+currentCity?.current?.condition?.icon){
+        holder.apiIcon.load(
+            context.getString(
+                R.string.api_icon_url,
+                currentCity?.current?.condition?.icon
+            )
+        ) {
             error(R.drawable.ic_launcher_background)
 
         }
@@ -47,11 +53,11 @@ class WeatherAdapter(private val citiesList : MutableList<ForecastResponse?>) : 
     }
 
     class CitiesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val cityName : TextView = itemView.findViewById(R.id.city_name)
-        val cityCoordinates : TextView = itemView.findViewById(R.id.city_coordinates)
-        val cityDistance : TextView = itemView.findViewById(R.id.city_distance)
-        val apiTemperature : TextView = itemView.findViewById(R.id.api_temperature)
-        val apiIcon : ImageView = itemView.findViewById(R.id.api_icon)
-        val starIcon : ImageView = itemView.findViewById(R.id.star_icon)
+        val cityName: TextView = itemView.findViewById(R.id.city_name)
+        val cityCoordinates: TextView = itemView.findViewById(R.id.city_coordinates)
+        val cityDistance: TextView = itemView.findViewById(R.id.city_distance)
+        val apiTemperature: TextView = itemView.findViewById(R.id.api_temperature)
+        val apiIcon: ImageView = itemView.findViewById(R.id.api_icon)
+        val starIcon: ImageView = itemView.findViewById(R.id.star_icon)
     }
 }
