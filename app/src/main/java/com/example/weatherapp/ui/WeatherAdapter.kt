@@ -54,7 +54,7 @@ class WeatherAdapter(private val citiesList: MutableList<ForecastResponse?>) :
     }
 
     class CitiesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding = ListItemBinding.bind(itemView)
+        //val binding = ListItemBinding.bind(itemView)
         
         val cityName: TextView = itemView.findViewById(R.id.city_name)
         val cityCoordinates: TextView = itemView.findViewById(R.id.city_coordinates)

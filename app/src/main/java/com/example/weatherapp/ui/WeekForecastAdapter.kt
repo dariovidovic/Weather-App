@@ -37,10 +37,11 @@ class WeekForecastAdapter(private val forecastInfo: ForecastResponse?) :
                 forecastInfo?.forecast?.forecastday?.get(position)?.day?.avgtemp_c.toString()
             )
         )
+
     }
 
     override fun getItemCount(): Int {
-        return 3
+        return forecastInfo?.forecast?.forecastday!!.size
     }
 
     class ForecastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

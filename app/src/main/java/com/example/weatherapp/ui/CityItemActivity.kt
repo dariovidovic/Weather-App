@@ -15,6 +15,7 @@ import java.util.*
 class CityItemActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCityItemBinding
+
     @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +25,8 @@ class CityItemActivity : AppCompatActivity() {
         setContentView(binding.root)
         val context = this@CityItemActivity
 
-        val currDate : String
-        val currTime : String
+        val currDate: String
+        val currTime: String
         val calendar: Calendar
         val date: SimpleDateFormat
         val time: SimpleDateFormat
@@ -57,27 +58,29 @@ class CityItemActivity : AppCompatActivity() {
             currentWeather.text = currentCity.current.condition.text
             currentDate.text = currDate
             currentTime.text = currTime
-            minMaxValue.text = context.getString(
-                R.string.min_max_temp,
-                currentCity.forecast.forecastday[0].day.mintemp_c.toString(),
-                currentCity.forecast.forecastday[0].day.maxtemp_c.toString()
-            )
-            windValue.text = context.getString(
-                R.string.wind_value,
-                currentCity.current.wind_kph.toString(),
-                currentCity.current.wind_dir
-            )
-            humidityValue.text =
-                context.getString(R.string.percentage, currentCity.current.humidity.toString())
-            pressureValue.text = context.getString(
-                R.string.pressure_value,
-                currentCity.current.pressure_mb.toString()
-            )
-            visibilityValue.text =
-                context.getString(R.string.visibility_value, currentCity.current.vis_km.toString())
-            accuracyValue.text = context.getString(R.string.accuracyMock)
 
+            val values = arrayListOf<String>(
+                context.getString(
+                    R.string.min_max_temp,
+                    currentCity.forecast.forecastday[0].day.mintemp_c.toString(),
+                    currentCity.forecast.forecastday[0].day.maxtemp_c.toString()
+                ),
+                context.getString(
+                    R.string.wind_value,
+                    currentCity.current.wind_kph.toString(),
+                    currentCity.current.wind_dir
+                ),
+                context.getString(R.string.percentage, currentCity.current.humidity.toString()),
+                context.getString(
+                    R.string.pressure_value,
+                    currentCity.current.pressure_mb.toString()
+                ),
+                context.getString(R.string.visibility_value, currentCity.current.vis_km.toString()),
+                context.getString(R.string.accuracyMock)
 
+            )
+            val gridAdapter = GridViewAdapter(context, values)
+            binding.weatherGrid.adapter = gridAdapter
         }
         val currentDayAdapter = CurrentDayForecastAdapter(currentCity)
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)

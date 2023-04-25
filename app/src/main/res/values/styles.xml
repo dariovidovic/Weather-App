@@ -33,4 +33,10 @@
         <item name="android:fontFamily">@font/roboto_bold</item>
     </style>
 
+    <style name="BodyMediumNLv1Center">
+        <item name="android:textColor">#1c1f22</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
 </resources>

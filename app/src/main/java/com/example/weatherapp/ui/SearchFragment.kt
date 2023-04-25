@@ -1,12 +1,15 @@
 package com.example.weatherapp.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,7 +45,10 @@ class SearchFragment : Fragment() {
                 it as MutableList<SearchResponse>
             )
             binding.searchBar.setAdapter(adapter)
+
         }
+
+
 
 
         val textWatcher: TextWatcher = object : TextWatcher {
@@ -61,24 +67,24 @@ class SearchFragment : Fragment() {
 
         }
         binding.searchBar.addTextChangedListener(textWatcher)
-
         binding.searchBar.setOnItemClickListener { _, _, _, _ ->
             viewModel.makeForecastApiCall(binding.searchBar.text.toString())
-
-
         }
 
         viewModel.getForecast().observe(viewLifecycleOwner) {
             forecastResponse.add(it)
+            val adapter = WeatherAdapter(forecastResponse)
+            binding.recyclerView.adapter = adapter
+            adapter.notifyDataSetChanged()
         }
 
 
         val linearLayoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        val adapter = WeatherAdapter(forecastResponse)
+
 
         binding.recyclerView.layoutManager = linearLayoutManager
-        binding.recyclerView.adapter = adapter
+
 
 
 
