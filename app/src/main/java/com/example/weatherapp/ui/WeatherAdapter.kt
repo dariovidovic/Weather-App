@@ -9,6 +9,7 @@ import android.widget.TextView
 import coil.load
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
+import com.example.weatherapp.databinding.ListItemBinding
 import com.example.weatherapp.data.ForecastResponse
 
 
@@ -53,6 +54,8 @@ class WeatherAdapter(private val citiesList: MutableList<ForecastResponse?>) :
     }
 
     class CitiesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val binding = ListItemBinding.bind(itemView)
+        
         val cityName: TextView = itemView.findViewById(R.id.city_name)
         val cityCoordinates: TextView = itemView.findViewById(R.id.city_coordinates)
         val cityDistance: TextView = itemView.findViewById(R.id.city_distance)

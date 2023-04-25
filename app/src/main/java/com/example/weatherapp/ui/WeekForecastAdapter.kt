@@ -40,7 +40,7 @@ class WeekForecastAdapter(private val forecastInfo: ForecastResponse?) :
     }
 
     override fun getItemCount(): Int {
-        return 7
+        return 3
     }
 
     class ForecastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

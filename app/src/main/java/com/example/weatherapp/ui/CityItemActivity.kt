@@ -8,6 +8,8 @@ import coil.load
 import com.example.weatherapp.R
 import com.example.weatherapp.data.ForecastResponse
 import com.example.weatherapp.databinding.ActivityCityItemBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class CityItemActivity : AppCompatActivity() {
@@ -20,8 +22,20 @@ class CityItemActivity : AppCompatActivity() {
 
         binding = ActivityCityItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val context = this@CityItemActivity
+
+        val currDate : String
+        val currTime : String
+        val calendar: Calendar
+        val date: SimpleDateFormat
+        val time: SimpleDateFormat
+
+        calendar = Calendar.getInstance()
+        date = SimpleDateFormat("E, LLLL dd")
+        time = SimpleDateFormat("HH:mm aaa (z)")
+        currDate = date.format(calendar.time).toString()
+        currTime = time.format(calendar.time).toString().uppercase()
+
 
         val currentCity = intent.extras?.getSerializable("city") as ForecastResponse
         binding.collapsingToolbarLayout.title = currentCity.location.name
@@ -41,8 +55,8 @@ class CityItemActivity : AppCompatActivity() {
                 error(R.drawable.ic_launcher_background)
             }
             currentWeather.text = currentCity.current.condition.text
-            currentDate.text = currentCity.location.localtime.subSequence(0, 10)
-            currentTime.text = currentCity.location.localtime.subSequence(11, 15)
+            currentDate.text = currDate
+            currentTime.text = currTime
             minMaxValue.text = context.getString(
                 R.string.min_max_temp,
                 currentCity.forecast.forecastday[0].day.mintemp_c.toString(),
