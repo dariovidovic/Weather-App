@@ -82,12 +82,12 @@ class CityItemActivity : AppCompatActivity() {
             val gridAdapter = GridViewAdapter(context, values)
             binding.weatherGrid.adapter = gridAdapter
         }
-        val currentDayAdapter = CurrentDayForecastAdapter(currentCity)
+        val currentDayAdapter = ForecastAdapter(currentCity, "currentDay")
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.currentRecyclerView.layoutManager = linearLayoutManager
         binding.currentRecyclerView.adapter = currentDayAdapter
 
-        val forecastAdapter = WeekForecastAdapter(currentCity)
+        val forecastAdapter = ForecastAdapter(currentCity, "weekForecast")
         val forecastLinearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.weekRecyclerView.layoutManager = forecastLinearLayoutManager
