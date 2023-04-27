@@ -25,5 +25,8 @@
     <string name="visibility_value">%s km</string>
     <string name="pressure_value">%s hPa</string>
     <string name="percentage">%s\%%</string>
+    <string name="my_cities">My Cities</string>
+    <string name="calendar">Calendar</string>
+    <string name="edit">Edit</string>
 
 </resources>
