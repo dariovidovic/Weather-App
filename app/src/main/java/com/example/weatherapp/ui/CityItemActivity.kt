@@ -3,10 +3,13 @@ package com.example.weatherapp.ui
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.weatherapp.R
 import com.example.weatherapp.data.ForecastResponse
+import com.example.weatherapp.data.Location
+import com.example.weatherapp.data.WeatherViewModel
 import com.example.weatherapp.databinding.ActivityCityItemBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -15,6 +18,7 @@ import java.util.*
 class CityItemActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCityItemBinding
+    private lateinit var weatherViewModel: WeatherViewModel
 
     @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +28,8 @@ class CityItemActivity : AppCompatActivity() {
         binding = ActivityCityItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val context = this@CityItemActivity
+
+        weatherViewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
 
         val currDate: String
         val currTime: String
@@ -36,6 +42,7 @@ class CityItemActivity : AppCompatActivity() {
         time = SimpleDateFormat("HH:mm aaa (z)")
         currDate = date.format(calendar.time).toString()
         currTime = time.format(calendar.time).toString().uppercase()
+
 
 
         val currentCity = intent.extras?.getSerializable("city") as ForecastResponse
@@ -93,8 +100,15 @@ class CityItemActivity : AppCompatActivity() {
         binding.weekRecyclerView.layoutManager = forecastLinearLayoutManager
         binding.weekRecyclerView.adapter = forecastAdapter
 
+        binding.currentTemperatureApiIcon.setOnClickListener {
+            val locationMock = Location(0,currentCity.location.name, currentCity.location.localtime)
+            weatherViewModel.addCity(locationMock)
+        }
+
+
 
     }
+
 
 
 }

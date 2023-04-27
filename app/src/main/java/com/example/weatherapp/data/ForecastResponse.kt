@@ -1,8 +1,12 @@
 package com.example.weatherapp.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
+
 data class ForecastResponse(
+    val date_epoch: Int,
     val location: Location,
     val current: Current,
     val forecast: Forecast,
@@ -11,7 +15,10 @@ data class ForecastResponse(
     val hour: Hour
 ) : Serializable
 
+@Entity(tableName = "weather_table")
 data class Location(
+    @PrimaryKey(autoGenerate = true)
+    val locationId : Int,
     val name: String,
     val localtime: String
 ) : Serializable
