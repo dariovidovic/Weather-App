@@ -7,9 +7,9 @@ import androidx.room.*
 interface WeatherDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addCity(forecastResponse: ForecastResponse)
+    suspend fun addCity(forecastResponse: ForecastResponse?)
 
     @Query("SELECT * FROM weather_table ORDER BY forecastId ASC")
-    fun readAllData() : LiveData<ForecastResponse?>
+    fun readAllData(): LiveData<ForecastResponse?>
 
 }

@@ -52,8 +52,6 @@ class SearchFragment : Fragment() {
         }
 
 
-
-
         val textWatcher: TextWatcher = object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -62,6 +60,7 @@ class SearchFragment : Fragment() {
                 if (binding.searchBar.text.count() > 2)
                     viewModel.makeApiCall(binding.searchBar.text.toString())
             }
+
             override fun afterTextChanged(p0: Editable?) {
 
             }

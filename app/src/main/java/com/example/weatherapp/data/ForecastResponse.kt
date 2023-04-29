@@ -43,7 +43,7 @@ data class Condition(
     var currId: Int
 ) : Serializable
 
-data class Forecast(var forecastday: ArrayList<ForecastDay> = arrayListOf()) : Serializable
+data class Forecast(var forecastday: List<ForecastDay>) : Serializable
 
 data class ForecastDay(var date: String, var day: Day, var hour: ArrayList<Hour> = arrayListOf()) :
     Serializable

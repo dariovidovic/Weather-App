@@ -12,6 +12,10 @@ public class WeatherViewModel(application: Application) : AndroidViewModel(appli
     val readAllData : LiveData<ForecastResponse?>
     private val repository: WeatherRepository
 
+    fun getCities() : LiveData<ForecastResponse?> {
+        return readAllData
+    }
+
 
     init {
         val weatherDao = WeatherDatabase.getDatabase(application).weatherDao()
@@ -19,7 +23,7 @@ public class WeatherViewModel(application: Application) : AndroidViewModel(appli
         readAllData = repository.readAllData
     }
 
-   fun addCity(forecastResponse: ForecastResponse) {
+   fun addCity(forecastResponse: ForecastResponse?) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addCity(forecastResponse)
         }

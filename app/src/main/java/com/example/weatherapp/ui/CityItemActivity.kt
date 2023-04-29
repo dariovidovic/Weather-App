@@ -45,7 +45,6 @@ class CityItemActivity : AppCompatActivity() {
         currTime = time.format(calendar.time).toString().uppercase()
 
 
-
         val currentCity = intent.extras?.getSerializable("city") as ForecastResponse
         binding.collapsingToolbarLayout.title = currentCity.location.name
         binding.collapsingToolbarLayout.expandedTitleMarginStart = 40
@@ -101,20 +100,26 @@ class CityItemActivity : AppCompatActivity() {
         binding.weekRecyclerView.layoutManager = forecastLinearLayoutManager
         binding.weekRecyclerView.adapter = forecastAdapter
 
-        /*binding.currentTemperatureApiIcon.setOnClickListener {
+        binding.currentTemperatureApiIcon.setOnClickListener {
             weatherViewModel.addCity(currentCity)
+            Toast.makeText(context, "${currentCity.current.condition}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "ADDING THE DATA", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                "${weatherViewModel.getCities().value?.current?.condition}",
+                Toast.LENGTH_SHORT
+            ).show()
             //weatherViewModel.addLocation(currentCity.location)
             //Toast.makeText(context, "${weatherViewModel.readAllData.toString()}", Toast.LENGTH_LONG).show()
         }
 
         binding.currentTemperature.setOnClickListener {
             weatherViewModel.readAllData
-        }*/
-
+            Toast.makeText(context, "READING THE DATA", Toast.LENGTH_SHORT).show()
+        }
 
 
     }
-
 
 
 }
