@@ -3,6 +3,7 @@ package com.example.weatherapp.ui
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
@@ -29,7 +30,7 @@ class CityItemActivity : AppCompatActivity() {
         setContentView(binding.root)
         val context = this@CityItemActivity
 
-        weatherViewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
+        weatherViewModel = ViewModelProvider(this)[WeatherViewModel::class.java]
 
         val currDate: String
         val currTime: String
@@ -100,10 +101,15 @@ class CityItemActivity : AppCompatActivity() {
         binding.weekRecyclerView.layoutManager = forecastLinearLayoutManager
         binding.weekRecyclerView.adapter = forecastAdapter
 
-        binding.currentTemperatureApiIcon.setOnClickListener {
-            val locationMock = Location(0,currentCity.location.name, currentCity.location.localtime)
-            weatherViewModel.addCity(locationMock)
+        /*binding.currentTemperatureApiIcon.setOnClickListener {
+            weatherViewModel.addCity(currentCity)
+            //weatherViewModel.addLocation(currentCity.location)
+            //Toast.makeText(context, "${weatherViewModel.readAllData.toString()}", Toast.LENGTH_LONG).show()
         }
+
+        binding.currentTemperature.setOnClickListener {
+            weatherViewModel.readAllData
+        }*/
 
 
 
