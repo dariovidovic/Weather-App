@@ -1,6 +1,5 @@
 package com.example.weatherapp.data
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
@@ -14,7 +13,8 @@ data class ForecastResponse(
     var forecast: Forecast,
     var forecastday: ForecastDay,
     var day: Day,
-    var hour: Hour
+    var hour: Hour,
+    var isFavourite : Boolean = false
 
 
 ) : Serializable
@@ -40,12 +40,11 @@ data class Condition(
     var conditionId: Int,
     var text: String,
     var icon: String,
-    var currId: Int
 ) : Serializable
 
 data class Forecast(var forecastday: List<ForecastDay>) : Serializable
 
-data class ForecastDay(var date: String, var day: Day, var hour: ArrayList<Hour> = arrayListOf()) :
+data class ForecastDay(var date: String, var day: Day,var hour: ArrayList<Hour> = arrayListOf()) :
     Serializable
 
 data class Day(
@@ -55,4 +54,4 @@ data class Day(
     var condition: Condition
 ) : Serializable
 
-data class Hour(var time: String, var temp_c: Double, var condition: Condition) : Serializable
+data class Hour(var time: String, var temp_c: Double,var condition: Condition) : Serializable

@@ -6,7 +6,7 @@
             android:icon="@drawable/ic_search"/>
 
         <item
-            android:title="@string/favourite"
+            android:title="@string/my_cities"
             android:id="@+id/favourite"
             android:icon="@drawable/ic_star"/>
 

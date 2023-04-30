@@ -1,4 +1,21 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="BottomNavigationThemee" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/color_secondary</item>
+        <item name="android:textColor" android:state_checked="true">@color/white</item>
+    </style>
+
+    <style name="BottomNavigationTheme" parent="Theme.AppCompat.Light">
+        <item name="itemTextAppearanceActive">@style/ActiveText</item>
+        <item name="itemTextAppearanceInactive">@style/InactiveText</item>
+    </style>
+    <style name="ActiveText">
+        <item name="android:textColor">@color/color_secondary</item>
+    </style>
+    <style name="InactiveText">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
     <style name="DisplayExtraLargeNLv1Right">
         <item name="android:gravity">end</item>
         <item name="android:fontFamily">sans-serif-light</item>

@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/favourite"
-        android:icon="@drawable/icons_android_ic_calendar"
-        android:title="@string/edit"
+        android:id="@+id/calendar"
+        android:icon="@drawable/ic_icons_android_ic_calendar"
+        android:title="@string/calendar"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/search"
-        android:icon="@drawable/icons_android_ic_edit"
+        android:id="@+id/edit"
+        android:icon="@drawable/ic_icons_android_ic_edit"
         android:title="@string/edit"
         app:showAsAction="ifRoom" />
 

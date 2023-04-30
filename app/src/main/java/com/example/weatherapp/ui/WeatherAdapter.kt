@@ -45,7 +45,7 @@ class WeatherAdapter(private val citiesList: MutableList<ForecastResponse?>) :
         holder.binding.cityName.text = currentCity?.location?.name
         holder.binding.apiTemperature.text =
             context.getString(R.string.currentTemperature, currentCity?.current?.temp_c.toString())
-        holder.binding.starIcon.load(R.drawable.icons_android_ic_star_0)
+        holder.binding.starIcon.load(R.drawable.ic_icons_android_ic_star_0)
         holder.binding.apiIcon.load(
             context.getString(
                 R.string.api_icon_url,

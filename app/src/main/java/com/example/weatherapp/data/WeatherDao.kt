@@ -12,4 +12,6 @@ interface WeatherDao {
     @Query("SELECT * FROM weather_table ORDER BY forecastId ASC")
     fun readAllData(): LiveData<ForecastResponse?>
 
+
+
 }

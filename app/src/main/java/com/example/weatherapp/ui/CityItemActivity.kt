@@ -3,6 +3,8 @@ package com.example.weatherapp.ui
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,16 +20,19 @@ import java.util.*
 
 class CityItemActivity : AppCompatActivity() {
 
+    private var favouriteStatus: Boolean = false
     private lateinit var binding: ActivityCityItemBinding
     private lateinit var weatherViewModel: WeatherViewModel
 
     @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_city_item)
+        //setContentView(R.layout.activity_city_item)
 
         binding = ActivityCityItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+
         val context = this@CityItemActivity
 
         weatherViewModel = ViewModelProvider(this)[WeatherViewModel::class.java]
@@ -100,25 +105,39 @@ class CityItemActivity : AppCompatActivity() {
         binding.weekRecyclerView.layoutManager = forecastLinearLayoutManager
         binding.weekRecyclerView.adapter = forecastAdapter
 
-        binding.currentTemperatureApiIcon.setOnClickListener {
-            weatherViewModel.addCity(currentCity)
-            Toast.makeText(context, "${currentCity.current.condition}", Toast.LENGTH_SHORT).show()
-            Toast.makeText(context, "ADDING THE DATA", Toast.LENGTH_SHORT).show()
-            Toast.makeText(
-                context,
-                "${weatherViewModel.getCities().value?.current?.condition}",
-                Toast.LENGTH_SHORT
-            ).show()
-            //weatherViewModel.addLocation(currentCity.location)
-            //Toast.makeText(context, "${weatherViewModel.readAllData.toString()}", Toast.LENGTH_LONG).show()
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.app_bar, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        if (favouriteStatus) {
+            menu?.findItem(R.id.action_fav)?.isVisible = false
+            menu?.findItem(R.id.action_unfav)?.isVisible = true
+        } else {
+            menu?.findItem(R.id.action_fav)?.isVisible = true
+            menu?.findItem(R.id.action_unfav)?.isVisible = false
         }
+        return super.onPrepareOptionsMenu(menu)
+    }
 
-        binding.currentTemperature.setOnClickListener {
-            weatherViewModel.readAllData
-            Toast.makeText(context, "READING THE DATA", Toast.LENGTH_SHORT).show()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_fav -> {
+                favouriteStatus = !favouriteStatus
+                Toast.makeText(this, "You saved this city!", Toast.LENGTH_SHORT).show()
+                invalidateOptionsMenu()
+            }
+            R.id.action_unfav -> {
+                favouriteStatus = !favouriteStatus
+                Toast.makeText(this, "Removed from favourites", Toast.LENGTH_SHORT).show()
+                invalidateOptionsMenu()
+            }
         }
-
-
+        return super.onOptionsItemSelected(item)
     }
 
 

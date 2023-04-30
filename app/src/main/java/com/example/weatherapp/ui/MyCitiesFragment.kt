@@ -27,12 +27,12 @@ class MyCitiesFragment : Fragment() {
         val root: View = binding.root
         val forecastResponse: MutableList<ForecastResponse?> = arrayListOf()
 
-        viewModel.getCities().observe(viewLifecycleOwner) {
+        /*viewModel.getCities().observe(viewLifecycleOwner) {
             forecastResponse.add(it)
             val adapter = WeatherAdapter(forecastResponse)
             binding.recyclerView.adapter = adapter
             adapter.notifyDataSetChanged()
-        }
+        }*/
 
         return root
 

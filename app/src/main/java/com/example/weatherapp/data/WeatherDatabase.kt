@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.weatherapp.utils.WeatherConverters
 
 @TypeConverters(WeatherConverters::class)
 @Database(entities = [ForecastResponse::class], version = 2, exportSchema = false)

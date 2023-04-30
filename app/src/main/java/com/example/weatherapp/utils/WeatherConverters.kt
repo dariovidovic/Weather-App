@@ -1,11 +1,8 @@
-package com.example.weatherapp.data
+package com.example.weatherapp.utils
 
 import androidx.room.TypeConverter
-import androidx.room.TypeConverters
+import com.example.weatherapp.data.*
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonArray
-import com.google.gson.reflect.TypeToken
 
 class WeatherConverters {
 
