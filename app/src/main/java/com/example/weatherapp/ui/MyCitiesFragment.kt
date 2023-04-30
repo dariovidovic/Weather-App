@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.example.weatherapp.R
-import com.example.weatherapp.data.ForecastResponse
-import com.example.weatherapp.data.WeatherViewModel
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.weatherapp.viewmodel.WeatherViewModel
 import com.example.weatherapp.databinding.FragmentMyCitiesBinding
 
 
@@ -21,18 +20,20 @@ class MyCitiesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentMyCitiesBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val forecastResponse: MutableList<ForecastResponse?> = arrayListOf()
 
-        /*viewModel.getCities().observe(viewLifecycleOwner) {
-            forecastResponse.add(it)
-            val adapter = WeatherAdapter(forecastResponse)
-            binding.recyclerView.adapter = adapter
-            adapter.notifyDataSetChanged()
-        }*/
+        val linearLayoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        val adapter = WeatherAdapter()
+        binding.recyclerViewTest.adapter = adapter
+        binding.recyclerViewTest.layoutManager = linearLayoutManager
+
+        viewModel.readAllData.observe(viewLifecycleOwner) {
+            adapter.setData(it.toMutableList())
+        }
 
         return root
 

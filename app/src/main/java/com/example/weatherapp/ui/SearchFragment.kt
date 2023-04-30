@@ -1,7 +1,6 @@
 package com.example.weatherapp.ui
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,11 +10,9 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.data.ForecastResponse
 import com.example.weatherapp.data.SearchResponse
-import com.example.weatherapp.data.WeatherViewModel
 import com.example.weatherapp.databinding.FragmentSearchBinding
 import com.example.weatherapp.viewmodel.CitiesViewModel
 
@@ -70,21 +67,18 @@ class SearchFragment : Fragment() {
             viewModel.makeForecastApiCall(binding.searchBar.text.toString())
         }
 
-        viewModel.getForecast().observe(viewLifecycleOwner) {
-            forecastResponse.add(it)
-            val adapter = WeatherAdapter(forecastResponse)
-            binding.recyclerView.adapter = adapter
-            adapter.notifyDataSetChanged()
-        }
-
 
         val linearLayoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-
+        val adapter = WeatherAdapter()
+        binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = linearLayoutManager
 
-
+        viewModel.getForecast().observe(viewLifecycleOwner) {
+            forecastResponse.add(it)
+            adapter.setData(forecastResponse)
+        }
 
 
         return root

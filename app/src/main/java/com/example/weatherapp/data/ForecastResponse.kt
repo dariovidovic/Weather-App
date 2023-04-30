@@ -1,5 +1,6 @@
 package com.example.weatherapp.data
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
@@ -8,18 +9,16 @@ import java.io.Serializable
 data class ForecastResponse(
     @PrimaryKey(autoGenerate = true)
     var forecastId: Int = 0,
-    var location: Location,
+    @Embedded(prefix = "location_") var location: Location,
     var current: Current,
     var forecast: Forecast,
-    var forecastday: ForecastDay,
-    var day: Day,
-    var hour: Hour,
     var isFavourite : Boolean = false
-
 
 ) : Serializable
 
 data class Location(
+    @PrimaryKey(autoGenerate = true)
+    var locationId : Int = 0,
     var name: String,
     var localtime: String,
 ) : Serializable

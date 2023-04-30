@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.weatherapp.R
 import com.example.weatherapp.data.ForecastResponse
-import com.example.weatherapp.data.Location
-import com.example.weatherapp.data.WeatherViewModel
+import com.example.weatherapp.data.WeatherDatabase
+import com.example.weatherapp.viewmodel.WeatherViewModel
 import com.example.weatherapp.databinding.ActivityCityItemBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -104,6 +104,15 @@ class CityItemActivity : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.weekRecyclerView.layoutManager = forecastLinearLayoutManager
         binding.weekRecyclerView.adapter = forecastAdapter
+
+        binding.currentTemperatureApiIcon.setOnClickListener {
+            Toast.makeText(context, "${currentCity.location.name}", Toast.LENGTH_SHORT).show()
+            weatherViewModel.addCity(currentCity)
+            Toast.makeText(context, "ADDING THE DATA", Toast.LENGTH_SHORT).show()
+
+        }
+        binding.currentTemperature.setOnClickListener {
+        }
 
 
     }

@@ -12,9 +12,10 @@ import com.example.weatherapp.databinding.ListItemBinding
 import com.example.weatherapp.data.ForecastResponse
 
 
-class WeatherAdapter(private val citiesList: MutableList<ForecastResponse?>) :
+class WeatherAdapter() :
     RecyclerView.Adapter<WeatherAdapter.CitiesViewHolder>() {
 
+    private var citiesList: MutableList<ForecastResponse?> = arrayListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CitiesViewHolder {
         return CitiesViewHolder(
             ListItemBinding.inflate(
@@ -65,4 +66,10 @@ class WeatherAdapter(private val citiesList: MutableList<ForecastResponse?>) :
 
     class CitiesViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
     }
+
+    fun setData(city: MutableList<ForecastResponse?>) {
+        this.citiesList = city
+        notifyDataSetChanged()
+    }
+
 }
