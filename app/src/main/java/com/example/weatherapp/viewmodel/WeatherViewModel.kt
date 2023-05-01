@@ -9,11 +9,14 @@ import com.example.weatherapp.data.WeatherDatabase
 import com.example.weatherapp.data.WeatherRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.NullPointerException
 
 class WeatherViewModel(application: Application) : AndroidViewModel(application) {
 
     var readAllData : LiveData<List<ForecastResponse?>>
+    var favCities : LiveData<List<ForecastResponse?>>
     private val repository: WeatherRepository
+
 
     fun getCities() : LiveData<List<ForecastResponse?>>{
         return readAllData
@@ -23,6 +26,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         val weatherDao = WeatherDatabase.getDatabase(application).weatherDao()
         repository = WeatherRepository(weatherDao)
         readAllData = repository.readAllData
+        favCities = repository.favCities
     }
 
    fun addCity(forecastResponse: ForecastResponse?) {
@@ -31,9 +35,9 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun deleteCity(forecastResponse: ForecastResponse?){
+    fun deleteCity(id: Int){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteCity(forecastResponse)
+            repository.deleteCity(id)
         }
     }
 
@@ -42,6 +46,14 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
             repository.deleteAllCities()
         }
     }
+
+    fun setFavStatus(id: Int, isFavouriteStatus: Boolean){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.setFavStatus(id, isFavouriteStatus)
+        }
+    }
+
+
 
 
 

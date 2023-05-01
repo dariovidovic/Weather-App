@@ -21,6 +21,8 @@ import java.util.*
 class CityItemActivity : AppCompatActivity() {
 
     private var favouriteStatus: Boolean = false
+    private var currentCityId: Int = 0
+    private var currentCityTemp : ForecastResponse? = null
     private lateinit var binding: ActivityCityItemBinding
     private lateinit var weatherViewModel: WeatherViewModel
 
@@ -51,6 +53,9 @@ class CityItemActivity : AppCompatActivity() {
 
 
         val currentCity = intent.extras?.getSerializable("city") as ForecastResponse
+        favouriteStatus = currentCity.isFavourite
+        currentCityTemp = currentCity
+        currentCityId = currentCity.forecastId
         binding.collapsingToolbarLayout.title = currentCity.location.name
         binding.collapsingToolbarLayout.expandedTitleMarginStart = 40
         binding.collapsingToolbarLayout.expandedTitleMarginTop = 180
@@ -105,15 +110,9 @@ class CityItemActivity : AppCompatActivity() {
         binding.weekRecyclerView.layoutManager = forecastLinearLayoutManager
         binding.weekRecyclerView.adapter = forecastAdapter
 
-        binding.currentTemperatureApiIcon.setOnClickListener {
-            Toast.makeText(context, "${currentCity.location.name}", Toast.LENGTH_SHORT).show()
-            weatherViewModel.addCity(currentCity)
-            Toast.makeText(context, "ADDING THE DATA", Toast.LENGTH_SHORT).show()
-
-        }
         binding.currentTemperature.setOnClickListener {
+            weatherViewModel.setFavStatus(currentCityId, false)
         }
-
 
     }
 
@@ -123,25 +122,34 @@ class CityItemActivity : AppCompatActivity() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        if (favouriteStatus) {
-            menu?.findItem(R.id.action_fav)?.isVisible = false
-            menu?.findItem(R.id.action_unfav)?.isVisible = true
-        } else {
-            menu?.findItem(R.id.action_fav)?.isVisible = true
-            menu?.findItem(R.id.action_unfav)?.isVisible = false
-        }
+
+            if (!favouriteStatus) {
+                menu?.findItem(R.id.action_fav)?.isVisible = true
+                menu?.findItem(R.id.action_unfav)?.isVisible = false
+            } else {
+                menu?.findItem(R.id.action_fav)?.isVisible = false
+                menu?.findItem(R.id.action_unfav)?.isVisible = true
+            }
+
+
+
+
+
         return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_fav -> {
-                favouriteStatus = !favouriteStatus
+                currentCityTemp?.isFavourite = true
+                weatherViewModel.addCity(currentCityTemp)
                 Toast.makeText(this, "You saved this city!", Toast.LENGTH_SHORT).show()
+                favouriteStatus = true
                 invalidateOptionsMenu()
             }
             R.id.action_unfav -> {
-                favouriteStatus = !favouriteStatus
+                favouriteStatus = false
+                weatherViewModel.deleteCity(currentCityId)
                 Toast.makeText(this, "Removed from favourites", Toast.LENGTH_SHORT).show()
                 invalidateOptionsMenu()
             }

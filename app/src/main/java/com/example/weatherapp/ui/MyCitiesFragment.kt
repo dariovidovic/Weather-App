@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.weatherapp.data.ForecastResponse
 import com.example.weatherapp.viewmodel.WeatherViewModel
 import com.example.weatherapp.databinding.FragmentMyCitiesBinding
 
@@ -31,8 +32,9 @@ class MyCitiesFragment : Fragment() {
         binding.recyclerViewTest.adapter = adapter
         binding.recyclerViewTest.layoutManager = linearLayoutManager
 
-        viewModel.readAllData.observe(viewLifecycleOwner) {
+        viewModel.favCities.observe(viewLifecycleOwner){
             adapter.setData(it.toMutableList())
+            adapter.notifyDataSetChanged()
         }
 
         return root
@@ -43,5 +45,6 @@ class MyCitiesFragment : Fragment() {
 
         fun newInstance() = MyCitiesFragment()
     }
+
 
 }

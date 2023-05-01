@@ -1,5 +1,6 @@
 package com.example.weatherapp.data
 
+import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -12,6 +13,7 @@ data class ForecastResponse(
     @Embedded(prefix = "location_") var location: Location,
     var current: Current,
     var forecast: Forecast,
+    @ColumnInfo(name = "favStatus")
     var isFavourite : Boolean = false
 
 ) : Serializable

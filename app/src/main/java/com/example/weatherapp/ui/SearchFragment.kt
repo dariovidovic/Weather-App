@@ -1,6 +1,7 @@
 package com.example.weatherapp.ui
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,6 +16,7 @@ import com.example.weatherapp.data.ForecastResponse
 import com.example.weatherapp.data.SearchResponse
 import com.example.weatherapp.databinding.FragmentSearchBinding
 import com.example.weatherapp.viewmodel.CitiesViewModel
+import com.example.weatherapp.viewmodel.WeatherViewModel
 
 
 class SearchFragment : Fragment() {
@@ -23,6 +25,7 @@ class SearchFragment : Fragment() {
 
     private val binding get() = _binding!!
     private val viewModel: CitiesViewModel by activityViewModels()
+    private val recentsViewModel : WeatherViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +68,13 @@ class SearchFragment : Fragment() {
         binding.searchBar.addTextChangedListener(textWatcher)
         binding.searchBar.setOnItemClickListener { _, _, _, _ ->
             viewModel.makeForecastApiCall(binding.searchBar.text.toString())
+            viewModel.getForecast().observe(viewLifecycleOwner) {
+                recentsViewModel.addCity(it)
+                val intent = Intent(context, CityItemActivity::class.java)
+                intent.putExtra("city", it )
+                startActivity(intent)
+            }
+
         }
 
 
@@ -75,10 +85,11 @@ class SearchFragment : Fragment() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = linearLayoutManager
 
-        viewModel.getForecast().observe(viewLifecycleOwner) {
-            forecastResponse.add(it)
-            adapter.setData(forecastResponse)
+        recentsViewModel.readAllData.observe(viewLifecycleOwner){
+            adapter.setData(it.toMutableList())
         }
+
+
 
 
         return root
