@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Weather-App/app/src/main/res/drawable/delete_button_background.xml" value="0.1335" />
         <entry key="..\:/Weather-App/app/src/main/res/drawable/ic_search.xml" value="0.2025" />
         <entry key="..\:/Weather-App/app/src/main/res/drawable/ic_settings.xml" value="0.2025" />
         <entry key="..\:/Weather-App/app/src/main/res/drawable/ic_star.xml" value="0.1335" />
@@ -15,7 +16,7 @@
         <entry key="..\:/Weather-App/app/src/main/res/layout/activity_main.xml" value="0.21011673151750973" />
         <entry key="..\:/Weather-App/app/src/main/res/layout/fragment_my_cities.xml" value="0.18541666666666667" />
         <entry key="..\:/Weather-App/app/src/main/res/layout/fragment_search.xml" value="0.23854166666666668" />
-        <entry key="..\:/Weather-App/app/src/main/res/layout/fragment_settings.xml" value="0.1638888888888889" />
+        <entry key="..\:/Weather-App/app/src/main/res/layout/fragment_settings.xml" value="0.176" />
         <entry key="..\:/Weather-App/app/src/main/res/layout/list_item.xml" value="0.1984375" />
         <entry key="..\:/Weather-App/app/src/main/res/layout/weather_info_tile.xml" value="0.21197916666666666" />
         <entry key="..\:/Weather-App/app/src/main/res/layout/weather_item.xml" value="0.253125" />

@@ -31,6 +31,18 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
+    fun deleteCity(forecastResponse: ForecastResponse?){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteCity(forecastResponse)
+        }
+    }
+
+    fun deleteAllCities(){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllCities()
+        }
+    }
+
 
 
 }

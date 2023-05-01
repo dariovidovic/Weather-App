@@ -14,9 +14,9 @@ import com.example.weatherapp.databinding.FragmentMyCitiesBinding
 class MyCitiesFragment : Fragment() {
 
     private var _binding: FragmentMyCitiesBinding? = null
-
     private val binding get() = _binding!!
     private val viewModel: WeatherViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

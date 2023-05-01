@@ -29,5 +29,7 @@
     <string name="my_cities">My Cities</string>
     <string name="calendar">Calendar</string>
     <string name="edit">Edit</string>
+    <string name="clear_my_cities">CLEAR MY CITIES LIST</string>
+    <string name="clear_recent">CLEAR RECENT SEARCH LIST</string>
 
 </resources>

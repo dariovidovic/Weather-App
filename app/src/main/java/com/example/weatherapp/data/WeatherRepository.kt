@@ -11,6 +11,14 @@ class WeatherRepository(private val weatherDao: WeatherDao) {
         weatherDao.addCity(forecastResponse)
     }
 
+    suspend fun deleteCity(forecastResponse: ForecastResponse?){
+        weatherDao.deleteCity(forecastResponse)
+    }
+
+    suspend fun deleteAllCities(){
+        weatherDao.deleteAllCities()
+    }
+
 
 
 }
