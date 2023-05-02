@@ -17,6 +17,7 @@ class CitiesViewModel : ViewModel() {
     private var listOfCities = MutableLiveData<List<SearchResponse>?>()
     private var forecastData = MutableLiveData<ForecastResponse?>()
 
+
     fun getCities(): MutableLiveData<List<SearchResponse>?> {
         return listOfCities
     }

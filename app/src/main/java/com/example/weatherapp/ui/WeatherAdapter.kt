@@ -1,22 +1,18 @@
 package com.example.weatherapp.ui
 
-
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import coil.load
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.ListItemBinding
 import com.example.weatherapp.data.ForecastResponse
-import com.example.weatherapp.viewmodel.WeatherViewModel
+import java.util.*
 
 
-class WeatherAdapter() :
+class WeatherAdapter :
 
     RecyclerView.Adapter<WeatherAdapter.CitiesViewHolder>() {
     private var citiesList: MutableList<ForecastResponse?> = arrayListOf()
@@ -40,28 +36,24 @@ class WeatherAdapter() :
             holder.itemView.context.startActivity(intent)
         }
 
-
-
         holder.binding.cityCoordinates.text = context.getString(R.string.coordinatesMock)
         holder.binding.cityDistance.text = context.getString(R.string.distanceMock)
         holder.binding.cityName.text = currentCity?.location?.name
 
-        if(currentCity?.isFavourite == false){
+        if (currentCity?.isFavourite == false) {
             holder.binding.starIcon.load(R.drawable.ic_icons_android_ic_star_0)
-        }
-        else
+        } else
             holder.binding.starIcon.load(R.drawable.ic_icons_android_ic_star_1)
 
 
         holder.binding.starIcon.setOnClickListener {
-            if(currentCity?.isFavourite == false){
+            if (currentCity?.isFavourite == false) {
                 Toast.makeText(context, "Grad spremljen!", Toast.LENGTH_LONG).show()
                 holder.binding.starIcon.load(R.drawable.ic_icons_android_ic_star_0)
                 currentCity.isFavourite = true
                 notifyItemChanged(position)
 
-            }
-            else{
+            } else {
                 Toast.makeText(context, "Grad uklonjen iz spremljenih!", Toast.LENGTH_LONG).show()
                 holder.binding.starIcon.load(R.drawable.ic_icons_android_ic_star_1)
                 currentCity?.isFavourite = false
@@ -90,8 +82,7 @@ class WeatherAdapter() :
         return citiesList.size
     }
 
-    class CitiesViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-    }
+    class CitiesViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     fun setData(city: MutableList<ForecastResponse?>) {
         this.citiesList = city

@@ -9,10 +9,16 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.DOWN
+import androidx.recyclerview.widget.ItemTouchHelper.UP
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
+import com.example.weatherapp.data.ForecastResponse
 import com.example.weatherapp.databinding.FragmentMyCitiesBinding
 import com.example.weatherapp.viewmodel.WeatherViewModel
+import java.util.*
 
 
 class MyCitiesFragment : Fragment(), MenuProvider {
@@ -20,7 +26,7 @@ class MyCitiesFragment : Fragment(), MenuProvider {
     private val binding get() = _binding!!
     private val viewModel: WeatherViewModel by activityViewModels()
     private var editStatus: Boolean = false
-
+    private var favCitiesTemp: List<ForecastResponse?> = arrayListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +36,7 @@ class MyCitiesFragment : Fragment(), MenuProvider {
         val root: View = binding.root
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
+
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
@@ -39,9 +46,38 @@ class MyCitiesFragment : Fragment(), MenuProvider {
         binding.recyclerViewTest.adapter = adapter
         binding.recyclerViewTest.layoutManager = linearLayoutManager
 
+
         viewModel.favCities.observe(viewLifecycleOwner) {
             adapter.setData(it.toMutableList())
+            favCitiesTemp = it
         }
+
+        val itemTouchHelper by lazy {
+            val reorderHelper = object : ItemTouchHelper.SimpleCallback(UP or DOWN, 0) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    val from = viewHolder.adapterPosition
+                    val to = target.adapterPosition
+                    Collections.swap(favCitiesTemp, from, to)
+                    adapter.notifyItemMoved(from, to)
+                    return true
+
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                }
+            }
+            ItemTouchHelper(reorderHelper)
+        }
+        viewModel.editStatus.observe(viewLifecycleOwner) {
+            if (it) {
+                itemTouchHelper.attachToRecyclerView(binding.recyclerViewTest)
+            } else itemTouchHelper.attachToRecyclerView(null)
+        }
+
         return root
 
     }
@@ -63,11 +99,13 @@ class MyCitiesFragment : Fragment(), MenuProvider {
                 return true
             }
             R.id.edit -> {
+                viewModel.changeEditStatus()
                 editStatus = true
                 activity?.invalidateOptionsMenu()
                 return true
             }
             R.id.done -> {
+                viewModel.changeEditStatus()
                 editStatus = false
                 activity?.invalidateOptionsMenu()
                 return true
@@ -88,4 +126,6 @@ class MyCitiesFragment : Fragment(), MenuProvider {
             menu.findItem(R.id.done).isVisible = true
         }
     }
+
+
 }

@@ -37,10 +37,6 @@ class SearchFragment : Fragment() {
 
         binding.searchBar.threshold = 3
 
-        val forecastResponse: MutableList<ForecastResponse?> = arrayListOf()
-
-
-
         viewModel.getCities().observe(viewLifecycleOwner) {
             val adapter = ArrayAdapter(
                 requireActivity(),
