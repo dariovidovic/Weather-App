@@ -41,7 +41,6 @@ class CitiesViewModel : ViewModel() {
 
     fun makeForecastApiCall(q: String) {
         viewModelScope.launch(Dispatchers.IO) {
-
             val retroInstance = RetrofitHelper.getRetroInstance().create(WeatherService::class.java)
 
             val forecastResponse =

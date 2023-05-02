@@ -28,7 +28,7 @@ class CityItemActivity : AppCompatActivity() {
     @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_city_item)
+        setContentView(R.layout.activity_city_item)
 
         binding = ActivityCityItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -106,10 +106,6 @@ class CityItemActivity : AppCompatActivity() {
         binding.weekRecyclerView.layoutManager = forecastLinearLayoutManager
         binding.weekRecyclerView.adapter = forecastAdapter
 
-        binding.currentTemperature.setOnClickListener {
-            weatherViewModel.setFavStatus(currentCityId, false)
-        }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -132,15 +128,17 @@ class CityItemActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_fav -> {
-                currentCityTemp?.isFavourite = true
-                weatherViewModel.addCity(currentCityTemp)
+                /*currentCityTemp?.isFavourite = true
+                weatherViewModel.addCity(currentCityTemp)*/
+                weatherViewModel.setFavStatus(currentCityId,true)
                 Toast.makeText(this, "You saved this city!", Toast.LENGTH_SHORT).show()
                 favouriteStatus = true
                 invalidateOptionsMenu()
             }
             R.id.action_unfav -> {
                 favouriteStatus = false
-                weatherViewModel.deleteCity(currentCityId)
+                //weatherViewModel.deleteCity(currentCityId)
+                weatherViewModel.setFavStatus(currentCityId, false)
                 Toast.makeText(this, "Removed from favourites", Toast.LENGTH_SHORT).show()
                 invalidateOptionsMenu()
             }

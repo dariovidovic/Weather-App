@@ -24,6 +24,8 @@ data class Location(
     @PrimaryKey(autoGenerate = true)
     var locationId : Int = 0,
     var name: String,
+    var lat: Float,
+    var lon: Float,
     var localtime: String,
 ) : Serializable
 

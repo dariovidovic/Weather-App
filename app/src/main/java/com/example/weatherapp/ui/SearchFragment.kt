@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -25,7 +26,7 @@ class SearchFragment : Fragment() {
 
     private val binding get() = _binding!!
     private val viewModel: CitiesViewModel by activityViewModels()
-    private val recentsViewModel : WeatherViewModel by activityViewModels()
+    private val weatherViewModel: WeatherViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,12 +65,12 @@ class SearchFragment : Fragment() {
         binding.searchBar.addTextChangedListener(textWatcher)
         binding.searchBar.setOnItemClickListener { _, _, _, _ ->
             viewModel.makeForecastApiCall(binding.searchBar.text.toString())
-            viewModel.getForecast().observe(viewLifecycleOwner) {
-                recentsViewModel.addCity(it)
-                val intent = Intent(context, CityItemActivity::class.java)
-                intent.putExtra("city", it )
-                startActivity(intent)
-            }
+        }
+        viewModel.getForecast().observe(viewLifecycleOwner) {
+            weatherViewModel.addCity(it)
+            val intent = Intent(requireContext(), CityItemActivity::class.java)
+            intent.putExtra("city", it)
+            startActivity(intent)
 
         }
 
@@ -81,7 +82,7 @@ class SearchFragment : Fragment() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = linearLayoutManager
 
-        recentsViewModel.readAllData.observe(viewLifecycleOwner){
+        weatherViewModel.readAllData.observe(viewLifecycleOwner) {
             adapter.setData(it.toMutableList())
         }
 
