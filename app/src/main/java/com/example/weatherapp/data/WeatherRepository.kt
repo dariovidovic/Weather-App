@@ -19,8 +19,20 @@ class WeatherRepository(private val weatherDao: WeatherDao) {
         weatherDao.deleteAllCities()
     }
 
+    suspend fun deleteFavCities(){
+        weatherDao.deleteFavCities()
+    }
+
+    suspend fun deleteRecentCities(){
+        weatherDao.deleteRecentCities()
+    }
+
     suspend fun setFavStatus(id : Int, isFavouriteStatus : Boolean){
         weatherDao.setFavStatus(id, isFavouriteStatus)
+    }
+
+    suspend fun setRecentStatus(id: Int, isRecentStatus : Boolean){
+        weatherDao.setRecentStatus(id, isRecentStatus)
     }
 
 

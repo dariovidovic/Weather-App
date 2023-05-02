@@ -52,11 +52,31 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
+    fun deleteFavCities() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteFavCities()
+        }
+    }
+
+    fun deleteRecentCities() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteRecentCities()
+        }
+    }
+
     fun setFavStatus(id: Int, isFavouriteStatus: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.setFavStatus(id, isFavouriteStatus)
         }
     }
+
+    fun setRecentStatus(id: Int, isRecentStatus: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.setFavStatus(id, isRecentStatus)
+        }
+    }
+
+
 
 
 }

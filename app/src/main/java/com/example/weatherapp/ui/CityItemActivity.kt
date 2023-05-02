@@ -118,7 +118,6 @@ class CityItemActivity : AppCompatActivity() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-
         if (!favouriteStatus) {
             menu?.findItem(R.id.action_fav)?.isVisible = true
             menu?.findItem(R.id.action_unfav)?.isVisible = false

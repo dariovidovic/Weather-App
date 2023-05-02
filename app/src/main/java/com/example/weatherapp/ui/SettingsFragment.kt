@@ -28,8 +28,9 @@ class SettingsFragment : Fragment() {
             clearMyFavCities()
         }
 
-
-
+        binding.clearRecentSearchesButton.setOnClickListener {
+            clearMyRecents()
+        }
 
         return binding.root
     }
@@ -43,7 +44,7 @@ class SettingsFragment : Fragment() {
     fun clearMyFavCities(){
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Yes") { _, _ ->
-            viewModel.deleteAllCities()
+            viewModel.deleteFavCities()
             Toast.makeText(
                 requireContext(),
                 "Successfully deleted all the cities from the favourites!",
@@ -54,6 +55,23 @@ class SettingsFragment : Fragment() {
         builder.setNegativeButton("No") { _, _ -> }
         builder.setTitle("Clear the favourite cities?")
         builder.setMessage("Are you sure you want to clear the favourite cities?")
+        builder.create().show()
+    }
+
+    fun clearMyRecents(){
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton("Yes") { _, _ ->
+            viewModel.deleteRecentCities()
+            Toast.makeText(
+                requireContext(),
+                "Successfully deleted all the cities from the recents!",
+                Toast.LENGTH_LONG
+            ).show()
+
+        }
+        builder.setNegativeButton("No") { _, _ -> }
+        builder.setTitle("Clear the recents cities?")
+        builder.setMessage("Are you sure you want to clear the recent cities?")
         builder.create().show()
     }
 }
