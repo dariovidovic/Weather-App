@@ -31,5 +31,6 @@
     <string name="edit">Edit</string>
     <string name="clear_my_cities">CLEAR MY CITIES LIST</string>
     <string name="clear_recent">CLEAR RECENT SEARCH LIST</string>
+    <string name="done">Done</string>
 
 </resources>

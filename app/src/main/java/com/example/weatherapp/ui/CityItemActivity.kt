@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.weatherapp.R
 import com.example.weatherapp.data.ForecastResponse
-import com.example.weatherapp.data.WeatherDatabase
 import com.example.weatherapp.viewmodel.WeatherViewModel
 import com.example.weatherapp.databinding.ActivityCityItemBinding
 import java.text.SimpleDateFormat
@@ -22,7 +21,7 @@ class CityItemActivity : AppCompatActivity() {
 
     private var favouriteStatus: Boolean = false
     private var currentCityId: Int = 0
-    private var currentCityTemp : ForecastResponse? = null
+    private var currentCityTemp: ForecastResponse? = null
     private lateinit var binding: ActivityCityItemBinding
     private lateinit var weatherViewModel: WeatherViewModel
 
@@ -41,13 +40,10 @@ class CityItemActivity : AppCompatActivity() {
 
         val currDate: String
         val currTime: String
-        val calendar: Calendar
-        val date: SimpleDateFormat
-        val time: SimpleDateFormat
 
-        calendar = Calendar.getInstance()
-        date = SimpleDateFormat("E, LLLL dd")
-        time = SimpleDateFormat("HH:mm aaa (z)")
+        val calendar: Calendar = Calendar.getInstance()
+        val date = SimpleDateFormat("E, LLLL dd")
+        val time = SimpleDateFormat("HH:mm aaa (z)")
         currDate = date.format(calendar.time).toString()
         currTime = time.format(calendar.time).toString().uppercase()
 
@@ -76,7 +72,7 @@ class CityItemActivity : AppCompatActivity() {
             currentDate.text = currDate
             currentTime.text = currTime
 
-            val values = arrayListOf<String>(
+            val values = arrayListOf(
                 context.getString(
                     R.string.min_max_temp,
                     currentCity.forecast.forecastday[0].day.mintemp_c.toString(),
@@ -123,17 +119,13 @@ class CityItemActivity : AppCompatActivity() {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
 
-            if (!favouriteStatus) {
-                menu?.findItem(R.id.action_fav)?.isVisible = true
-                menu?.findItem(R.id.action_unfav)?.isVisible = false
-            } else {
-                menu?.findItem(R.id.action_fav)?.isVisible = false
-                menu?.findItem(R.id.action_unfav)?.isVisible = true
-            }
-
-
-
-
+        if (!favouriteStatus) {
+            menu?.findItem(R.id.action_fav)?.isVisible = true
+            menu?.findItem(R.id.action_unfav)?.isVisible = false
+        } else {
+            menu?.findItem(R.id.action_fav)?.isVisible = false
+            menu?.findItem(R.id.action_unfav)?.isVisible = true
+        }
 
         return super.onPrepareOptionsMenu(menu)
     }
