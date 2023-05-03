@@ -8,14 +8,11 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.weatherapp.data.ForecastResponse
 import com.example.weatherapp.data.SearchResponse
 import com.example.weatherapp.databinding.FragmentSearchBinding
 import com.example.weatherapp.viewmodel.CitiesViewModel
@@ -26,10 +23,16 @@ class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
 
+    private lateinit var weatherViewModel: WeatherViewModel
+    private lateinit var viewModel: CitiesViewModel
     private val binding get() = _binding!!
-    private val viewModel: CitiesViewModel by activityViewModels()
-    private val weatherViewModel: WeatherViewModel by activityViewModels()
     private var currentCityId: Int = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel = ViewModelProviders.of(this)[CitiesViewModel::class.java]
+        weatherViewModel = ViewModelProviders.of(this)[WeatherViewModel::class.java]
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,7 +72,7 @@ class SearchFragment : Fragment() {
         binding.searchBar.setOnItemClickListener { _, _, _, _ ->
             viewModel.makeForecastApiCall(binding.searchBar.text.toString())
         }
-        viewModel.forecastData.observe(viewLifecycleOwner) {
+        viewModel.getForecast().observe(viewLifecycleOwner) {
             weatherViewModel.addCity(it)
             val intent = Intent(requireContext(), CityItemActivity::class.java)
             intent.putExtra("city", it)
@@ -80,7 +83,7 @@ class SearchFragment : Fragment() {
         val linearLayoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        val adapter = WeatherAdapter(WeatherAdapter.OnClickListener { it ->
+        val adapter = WeatherAdapter(WeatherAdapter.OnClickListener {
             currentCityId = it?.forecastId ?: 0
             val currentFav = it?.isFavourite ?: false
             weatherViewModel.setFavStatus(currentCityId, !currentFav)
@@ -108,11 +111,6 @@ class SearchFragment : Fragment() {
         super.onDestroyView()
         _binding = null
         viewModel.forecastData.removeObservers(viewLifecycleOwner)
-    }
-
-    override fun onStop() {
-        super.onStop()
-
     }
 
 }

@@ -14,7 +14,6 @@ class CitiesViewModel : ViewModel() {
     private var listOfCities = MutableLiveData<List<SearchResponse>?>()
     private val _forecastData = MutableLiveData<ForecastResponse?>()
     val forecastData : LiveData<ForecastResponse?> = _forecastData.distinctUntilChanged()
-    //var forecastData = MutableLiveData<ForecastResponse?>()
 
 
     fun getCities(): MutableLiveData<List<SearchResponse>?> {
@@ -22,7 +21,7 @@ class CitiesViewModel : ViewModel() {
     }
 
     fun getForecast(): LiveData<ForecastResponse?> {
-        return forecastData
+        return _forecastData.distinctUntilChanged()
     }
 
 
