@@ -1,40 +1,62 @@
 package com.example.weatherapp.data
 
+import androidx.room.ColumnInfo
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
+@Entity(tableName = "weather_table")
 data class ForecastResponse(
-    val location: Location,
-    val current: Current,
-    val forecast: Forecast,
-    val forecastday: ForecastDay,
-    val day: Day,
-    val hour: Hour
+    @PrimaryKey(autoGenerate = true)
+    var forecastId: Int = 0,
+    @Embedded(prefix = "location_") var location: Location,
+    var current: Current,
+    var forecast: Forecast,
+    @ColumnInfo(name = "favStatus")
+    var isFavourite : Boolean = false,
+    @ColumnInfo(name = "isRecent")
+    var isRecent : Boolean = false
+
 ) : Serializable
 
 data class Location(
-    val name: String,
-    val localtime: String
+    @PrimaryKey(autoGenerate = true)
+    var locationId : Int = 0,
+    var name: String,
+    var lat: Float,
+    var lon: Float,
+    var localtime: String,
 ) : Serializable
 
 data class Current(
-    val condition: Condition,
-    val temp_c: Int,
-    val wind_kph: Float,
-    val wind_dir: String,
-    val pressure_mb: Int,
-    val humidity: Int,
-    val vis_km: Int
+    var currId: Int = 0,
+    var condition: Condition,
+    var temp_c: Float,
+    var wind_kph: Float,
+    var wind_dir: String,
+    var pressure_mb: Int,
+    var humidity: Int,
+    var vis_km: Int
 ) : Serializable
 
 data class Condition(
-    val text: String,
-    val icon: String
+    @PrimaryKey(autoGenerate = true)
+    var conditionId: Int,
+    var text: String,
+    var icon: String,
 ) : Serializable
 
-data class Forecast(var forecastday: ArrayList<ForecastDay>  = arrayListOf()) : Serializable
+data class Forecast(var forecastday: List<ForecastDay>) : Serializable
 
-data class ForecastDay(val date: String,val day: Day, var hour: ArrayList<Hour>) : Serializable
+data class ForecastDay(var date: String, var day: Day,var hour: ArrayList<Hour> = arrayListOf()) :
+    Serializable
 
-data class Day(val maxtemp_c: Double, val mintemp_c: Double, val avgtemp_c : Float, val condition: Condition) : Serializable
+data class Day(
+    var maxtemp_c: Double,
+    var mintemp_c: Double,
+    var avgtemp_c: Float,
+    var condition: Condition
+) : Serializable
 
-data class Hour(val time: String, val temp_c: Double, val condition: Condition) : Serializable
+data class Hour(var time: String, var temp_c: Double,var condition: Condition) : Serializable

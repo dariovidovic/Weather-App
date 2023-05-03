@@ -3,10 +3,15 @@ package com.example.weatherapp.ui
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.weatherapp.R
 import com.example.weatherapp.data.ForecastResponse
+import com.example.weatherapp.viewmodel.WeatherViewModel
 import com.example.weatherapp.databinding.ActivityCityItemBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -14,7 +19,11 @@ import java.util.*
 
 class CityItemActivity : AppCompatActivity() {
 
+    private var favouriteStatus: Boolean = false
+    private var currentCityId: Int = 0
+    private var currentCityTemp: ForecastResponse? = null
     private lateinit var binding: ActivityCityItemBinding
+    private lateinit var weatherViewModel: WeatherViewModel
 
     @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,22 +32,26 @@ class CityItemActivity : AppCompatActivity() {
 
         binding = ActivityCityItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+
         val context = this@CityItemActivity
+
+        weatherViewModel = ViewModelProvider(this)[WeatherViewModel::class.java]
 
         val currDate: String
         val currTime: String
-        val calendar: Calendar
-        val date: SimpleDateFormat
-        val time: SimpleDateFormat
 
-        calendar = Calendar.getInstance()
-        date = SimpleDateFormat("E, LLLL dd")
-        time = SimpleDateFormat("HH:mm aaa (z)")
+        val calendar: Calendar = Calendar.getInstance()
+        val date = SimpleDateFormat("E, LLLL dd")
+        val time = SimpleDateFormat("HH:mm aaa (z)")
         currDate = date.format(calendar.time).toString()
         currTime = time.format(calendar.time).toString().uppercase()
 
 
         val currentCity = intent.extras?.getSerializable("city") as ForecastResponse
+        favouriteStatus = currentCity.isFavourite
+        currentCityTemp = currentCity
+        currentCityId = currentCity.forecastId
         binding.collapsingToolbarLayout.title = currentCity.location.name
         binding.collapsingToolbarLayout.expandedTitleMarginStart = 40
         binding.collapsingToolbarLayout.expandedTitleMarginTop = 180
@@ -59,7 +72,7 @@ class CityItemActivity : AppCompatActivity() {
             currentDate.text = currDate
             currentTime.text = currTime
 
-            val values = arrayListOf<String>(
+            val values = arrayListOf(
                 context.getString(
                     R.string.min_max_temp,
                     currentCity.forecast.forecastday[0].day.mintemp_c.toString(),
@@ -93,7 +106,41 @@ class CityItemActivity : AppCompatActivity() {
         binding.weekRecyclerView.layoutManager = forecastLinearLayoutManager
         binding.weekRecyclerView.adapter = forecastAdapter
 
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.app_bar, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        if (!favouriteStatus) {
+            menu?.findItem(R.id.action_fav)?.isVisible = true
+            menu?.findItem(R.id.action_unfav)?.isVisible = false
+        } else {
+            menu?.findItem(R.id.action_fav)?.isVisible = false
+            menu?.findItem(R.id.action_unfav)?.isVisible = true
+        }
+
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_fav -> {
+                weatherViewModel.setFavStatus(currentCityId,true)
+                Toast.makeText(this, "You saved this city!", Toast.LENGTH_SHORT).show()
+                favouriteStatus = true
+                invalidateOptionsMenu()
+            }
+            R.id.action_unfav -> {
+                favouriteStatus = false
+                weatherViewModel.setFavStatus(currentCityId, false)
+                Toast.makeText(this, "Removed from favourites", Toast.LENGTH_SHORT).show()
+                invalidateOptionsMenu()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 

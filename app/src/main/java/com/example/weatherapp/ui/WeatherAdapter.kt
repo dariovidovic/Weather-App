@@ -2,42 +2,70 @@ package com.example.weatherapp.ui
 
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.Toast
 import coil.load
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.ListItemBinding
 import com.example.weatherapp.data.ForecastResponse
+import java.util.*
 
 
-class WeatherAdapter(private val citiesList: MutableList<ForecastResponse?>) :
+class WeatherAdapter(private val onClickListener : OnClickListener) :
+
     RecyclerView.Adapter<WeatherAdapter.CitiesViewHolder>() {
-
-
+    private var citiesList: MutableList<ForecastResponse?> = arrayListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CitiesViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item, parent, false)
-        return CitiesViewHolder(itemView)
+        return CitiesViewHolder(
+            ListItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: CitiesViewHolder, position: Int) {
         val currentCity = citiesList[position]
+        val context = holder.itemView.context
+
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, CityItemActivity::class.java)
             intent.putExtra("city", currentCity)
             holder.itemView.context.startActivity(intent)
         }
-        val context = holder.itemView.context
-        holder.cityCoordinates.text = context.getString(R.string.coordinatesMock)
-        holder.cityDistance.text = context.getString(R.string.distanceMock)
-        holder.cityName.text = currentCity?.location?.name
-        holder.apiTemperature.text =
+
+        holder.binding.cityCoordinates.text = context.getString(R.string.coordinatesMock)
+        holder.binding.cityDistance.text = context.getString(R.string.distanceMock)
+        holder.binding.cityName.text = currentCity?.location?.name
+
+        if (currentCity?.isFavourite == false) {
+            holder.binding.starIcon.load(R.drawable.ic_icons_android_ic_star_0)
+        } else
+            holder.binding.starIcon.load(R.drawable.ic_icons_android_ic_star_1)
+
+
+        holder.binding.starIcon.setOnClickListener {
+            if (currentCity?.isFavourite == true) {
+                Toast.makeText(context, "City removed from My Cities!", Toast.LENGTH_SHORT).show()
+                holder.binding.starIcon.load(R.drawable.ic_icons_android_ic_star_0)
+                onClickListener.onClick(currentCity)
+                notifyItemChanged(position)
+
+            } else {
+                Toast.makeText(context, "City saved to My Cities!", Toast.LENGTH_SHORT).show()
+                holder.binding.starIcon.load(R.drawable.ic_icons_android_ic_star_1)
+                onClickListener.onClick(currentCity)
+                notifyItemChanged(position)
+            }
+
+        }
+
+        holder.binding.apiTemperature.text =
             context.getString(R.string.currentTemperature, currentCity?.current?.temp_c.toString())
-        holder.starIcon.load(R.drawable.icons_android_ic_star_0)
-        holder.apiIcon.load(
+
+        holder.binding.apiIcon.load(
             context.getString(
                 R.string.api_icon_url,
                 currentCity?.current?.condition?.icon
@@ -49,18 +77,20 @@ class WeatherAdapter(private val citiesList: MutableList<ForecastResponse?>) :
 
     }
 
+
     override fun getItemCount(): Int {
         return citiesList.size
     }
 
-    class CitiesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //val binding = ListItemBinding.bind(itemView)
-        
-        val cityName: TextView = itemView.findViewById(R.id.city_name)
-        val cityCoordinates: TextView = itemView.findViewById(R.id.city_coordinates)
-        val cityDistance: TextView = itemView.findViewById(R.id.city_distance)
-        val apiTemperature: TextView = itemView.findViewById(R.id.api_temperature)
-        val apiIcon: ImageView = itemView.findViewById(R.id.api_icon)
-        val starIcon: ImageView = itemView.findViewById(R.id.star_icon)
+    class CitiesViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root)
+
+    fun setData(city: MutableList<ForecastResponse?>) {
+        this.citiesList = city
+        notifyDataSetChanged()
     }
+
+    class OnClickListener(val clickListener: (currentCity : ForecastResponse?) -> Unit){
+        fun onClick(currentCity: ForecastResponse?) = clickListener(currentCity)
+    }
+
 }

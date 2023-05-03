@@ -1,5 +1,6 @@
 package com.example.weatherapp.ui
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -7,24 +8,31 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.weatherapp.data.ForecastResponse
 import com.example.weatherapp.data.SearchResponse
 import com.example.weatherapp.databinding.FragmentSearchBinding
 import com.example.weatherapp.viewmodel.CitiesViewModel
+import com.example.weatherapp.viewmodel.WeatherViewModel
 
 
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
 
+    private lateinit var weatherViewModel: WeatherViewModel
+    private lateinit var viewModel: CitiesViewModel
     private val binding get() = _binding!!
-    private val viewModel: CitiesViewModel by activityViewModels()
+    private var currentCityId: Int = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel = ViewModelProviders.of(this)[CitiesViewModel::class.java]
+        weatherViewModel = ViewModelProviders.of(this)[WeatherViewModel::class.java]
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,8 +43,6 @@ class SearchFragment : Fragment() {
         val root: View = binding.root
 
         binding.searchBar.threshold = 3
-
-        val forecastResponse: MutableList<ForecastResponse?> = arrayListOf()
 
         viewModel.getCities().observe(viewLifecycleOwner) {
             val adapter = ArrayAdapter(
@@ -49,11 +55,8 @@ class SearchFragment : Fragment() {
         }
 
 
-
-
         val textWatcher: TextWatcher = object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -64,26 +67,35 @@ class SearchFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {
 
             }
-
         }
         binding.searchBar.addTextChangedListener(textWatcher)
         binding.searchBar.setOnItemClickListener { _, _, _, _ ->
             viewModel.makeForecastApiCall(binding.searchBar.text.toString())
         }
-
         viewModel.getForecast().observe(viewLifecycleOwner) {
-            forecastResponse.add(it)
-            val adapter = WeatherAdapter(forecastResponse)
-            binding.recyclerView.adapter = adapter
-            adapter.notifyDataSetChanged()
+            weatherViewModel.addCity(it)
+            val intent = Intent(requireContext(), CityItemActivity::class.java)
+            intent.putExtra("city", it)
+            startActivity(intent)
         }
 
 
         val linearLayoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
+        val adapter = WeatherAdapter(WeatherAdapter.OnClickListener {
+            currentCityId = it?.forecastId ?: 0
+            val currentFav = it?.isFavourite ?: false
+            weatherViewModel.setFavStatus(currentCityId, !currentFav)
 
+        })
+        binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = linearLayoutManager
+
+
+        weatherViewModel.recentCities.observe(viewLifecycleOwner) {
+            adapter.setData(it.toMutableList())
+        }
 
 
 
@@ -98,6 +110,7 @@ class SearchFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        viewModel.forecastData.removeObservers(viewLifecycleOwner)
     }
 
 }
