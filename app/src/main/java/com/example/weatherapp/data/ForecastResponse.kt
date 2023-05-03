@@ -15,7 +15,7 @@ data class ForecastResponse(
     var forecast: Forecast,
     @ColumnInfo(name = "favStatus")
     var isFavourite : Boolean = false,
-    @ColumnInfo(name = "recentStatus")
+    @ColumnInfo(name = "isRecent")
     var isRecent : Boolean = false
 
 ) : Serializable

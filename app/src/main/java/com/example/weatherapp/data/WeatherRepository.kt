@@ -6,6 +6,7 @@ class WeatherRepository(private val weatherDao: WeatherDao) {
 
     var readAllData: LiveData<List<ForecastResponse?>> = weatherDao.readAllData()
     var favCities: LiveData<List<ForecastResponse?>> = weatherDao.getFavourites()
+    var recentCities: LiveData<List<ForecastResponse?>> = weatherDao.getRecent()
 
     suspend fun addCity(forecastResponse: ForecastResponse?) {
         weatherDao.addCity(forecastResponse)
@@ -31,9 +32,11 @@ class WeatherRepository(private val weatherDao: WeatherDao) {
         weatherDao.setFavStatus(id, isFavouriteStatus)
     }
 
+    //Recent fragment filtriranje
     suspend fun setRecentStatus(id: Int, isRecentStatus : Boolean){
         weatherDao.setRecentStatus(id, isRecentStatus)
     }
+
 
 
 

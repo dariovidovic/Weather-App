@@ -12,7 +12,7 @@ import com.example.weatherapp.data.ForecastResponse
 import java.util.*
 
 
-class WeatherAdapter :
+class WeatherAdapter(private val onClickListener : OnClickListener) :
 
     RecyclerView.Adapter<WeatherAdapter.CitiesViewHolder>() {
     private var citiesList: MutableList<ForecastResponse?> = arrayListOf()
@@ -47,16 +47,16 @@ class WeatherAdapter :
 
 
         holder.binding.starIcon.setOnClickListener {
-            if (currentCity?.isFavourite == false) {
-                Toast.makeText(context, "Grad spremljen!", Toast.LENGTH_LONG).show()
+            if (currentCity?.isFavourite == true) {
+                Toast.makeText(context, "City removed from My Cities!", Toast.LENGTH_SHORT).show()
                 holder.binding.starIcon.load(R.drawable.ic_icons_android_ic_star_0)
-                currentCity.isFavourite = true
+                onClickListener.onClick(currentCity)
                 notifyItemChanged(position)
 
             } else {
-                Toast.makeText(context, "Grad uklonjen iz spremljenih!", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "City saved to My Cities!", Toast.LENGTH_SHORT).show()
                 holder.binding.starIcon.load(R.drawable.ic_icons_android_ic_star_1)
-                currentCity?.isFavourite = false
+                onClickListener.onClick(currentCity)
                 notifyItemChanged(position)
             }
 
@@ -87,6 +87,10 @@ class WeatherAdapter :
     fun setData(city: MutableList<ForecastResponse?>) {
         this.citiesList = city
         notifyDataSetChanged()
+    }
+
+    class OnClickListener(val clickListener: (currentCity : ForecastResponse?) -> Unit){
+        fun onClick(currentCity: ForecastResponse?) = clickListener(currentCity)
     }
 
 }

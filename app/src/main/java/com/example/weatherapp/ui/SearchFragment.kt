@@ -10,8 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.data.ForecastResponse
 import com.example.weatherapp.data.SearchResponse
@@ -27,6 +29,7 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: CitiesViewModel by activityViewModels()
     private val weatherViewModel: WeatherViewModel by activityViewModels()
+    private var currentCityId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,23 +69,28 @@ class SearchFragment : Fragment() {
         binding.searchBar.setOnItemClickListener { _, _, _, _ ->
             viewModel.makeForecastApiCall(binding.searchBar.text.toString())
         }
-        viewModel.getForecast().observe(viewLifecycleOwner) {
+        viewModel.forecastData.observe(viewLifecycleOwner) {
             weatherViewModel.addCity(it)
             val intent = Intent(requireContext(), CityItemActivity::class.java)
             intent.putExtra("city", it)
             startActivity(intent)
-
         }
 
 
         val linearLayoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        val adapter = WeatherAdapter()
+        val adapter = WeatherAdapter(WeatherAdapter.OnClickListener { it ->
+            currentCityId = it?.forecastId ?: 0
+            val currentFav = it?.isFavourite ?: false
+            weatherViewModel.setFavStatus(currentCityId, !currentFav)
+
+        })
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = linearLayoutManager
 
-        weatherViewModel.readAllData.observe(viewLifecycleOwner) {
+
+        weatherViewModel.recentCities.observe(viewLifecycleOwner) {
             adapter.setData(it.toMutableList())
         }
 
@@ -99,6 +107,12 @@ class SearchFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        viewModel.forecastData.removeObservers(viewLifecycleOwner)
+    }
+
+    override fun onStop() {
+        super.onStop()
+
     }
 
 }

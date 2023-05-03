@@ -15,6 +15,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
 
     var readAllData: LiveData<List<ForecastResponse?>>
     var favCities: LiveData<List<ForecastResponse?>>
+    var recentCities: LiveData<List<ForecastResponse?>>
     private val repository: WeatherRepository
 
     private val _editStatus = MutableLiveData(false)
@@ -32,6 +33,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         repository = WeatherRepository(weatherDao)
         readAllData = repository.readAllData
         favCities = repository.favCities
+        recentCities = repository.recentCities
     }
 
     fun addCity(forecastResponse: ForecastResponse?) {
@@ -70,11 +72,14 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
+
+    //Recent filtar
     fun setRecentStatus(id: Int, isRecentStatus: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.setFavStatus(id, isRecentStatus)
         }
     }
+
 
 
 

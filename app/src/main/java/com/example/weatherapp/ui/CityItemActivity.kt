@@ -128,8 +128,6 @@ class CityItemActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_fav -> {
-                /*currentCityTemp?.isFavourite = true
-                weatherViewModel.addCity(currentCityTemp)*/
                 weatherViewModel.setFavStatus(currentCityId,true)
                 Toast.makeText(this, "You saved this city!", Toast.LENGTH_SHORT).show()
                 favouriteStatus = true
@@ -137,7 +135,6 @@ class CityItemActivity : AppCompatActivity() {
             }
             R.id.action_unfav -> {
                 favouriteStatus = false
-                //weatherViewModel.deleteCity(currentCityId)
                 weatherViewModel.setFavStatus(currentCityId, false)
                 Toast.makeText(this, "Removed from favourites", Toast.LENGTH_SHORT).show()
                 invalidateOptionsMenu()

@@ -25,8 +25,10 @@ class MyCitiesFragment : Fragment(), MenuProvider {
     private var _binding: FragmentMyCitiesBinding? = null
     private val binding get() = _binding!!
     private val viewModel: WeatherViewModel by activityViewModels()
+    private val weatherViewModel: WeatherViewModel by activityViewModels()
     private var editStatus: Boolean = false
     private var favCitiesTemp: List<ForecastResponse?> = arrayListOf()
+    private var currentCityId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +44,11 @@ class MyCitiesFragment : Fragment(), MenuProvider {
 
         val linearLayoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        val adapter = WeatherAdapter()
+        val adapter = WeatherAdapter(WeatherAdapter.OnClickListener { it ->
+            currentCityId = it?.forecastId ?: 0
+            val currentFav = it?.isFavourite ?: false
+            weatherViewModel.setFavStatus(currentCityId, !currentFav)
+        })
         binding.recyclerViewTest.adapter = adapter
         binding.recyclerViewTest.layoutManager = linearLayoutManager
 

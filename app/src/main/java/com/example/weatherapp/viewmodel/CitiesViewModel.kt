@@ -1,9 +1,6 @@
 package com.example.weatherapp.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.weatherapp.data.ForecastResponse
 import com.example.weatherapp.data.SearchResponse
 import com.example.weatherapp.retrofit.RetrofitHelper
@@ -15,7 +12,9 @@ import kotlinx.coroutines.launch
 class CitiesViewModel : ViewModel() {
 
     private var listOfCities = MutableLiveData<List<SearchResponse>?>()
-    private var forecastData = MutableLiveData<ForecastResponse?>()
+    private val _forecastData = MutableLiveData<ForecastResponse?>()
+    val forecastData : LiveData<ForecastResponse?> = _forecastData.distinctUntilChanged()
+    //var forecastData = MutableLiveData<ForecastResponse?>()
 
 
     fun getCities(): MutableLiveData<List<SearchResponse>?> {
@@ -45,7 +44,7 @@ class CitiesViewModel : ViewModel() {
 
             val forecastResponse =
                 retroInstance.getForecastByCity(API_KEY, q, "7").body()
-            forecastData.postValue(forecastResponse)
+            _forecastData.postValue(forecastResponse)
         }
     }
 
